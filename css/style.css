@@ -453,12 +453,25 @@ button.btn-locked:hover {
 /* ==========================================================================
    8. FOOTER STYLING & BRANDING BRICKS
    ========================================================================== */
-.site-logo {
-    display: block;
+
+/* Container to align the logos horizontally */
+.logo-group {
+    display: flex;
+    justify-content: center; /* Centers them horizontally */
+    align-items: center;     /* Centers them vertically relative to each other */
+    gap: 20px;               /* Space between each logo */
     margin: 30px auto 10px auto;
+}
+
+/* Individual logo adjustments */
+.site-logo {
+    display: block;          /* Removes any default inline whitespace gaps */
     max-width: 60px;
     height: auto;
+    background-color: var( --gold);
+    border-radius: 50%;
 }
+
 
 .footer {
     margin: 24px;
