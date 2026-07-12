@@ -304,7 +304,6 @@ button.btn-locked:hover {
     border-radius: 999px;
 }
 
-/* Site Logo Layout - Centered horizontally inside card flex */
 .site-logo {
     display: block;
     margin: 30px auto 10px auto;
