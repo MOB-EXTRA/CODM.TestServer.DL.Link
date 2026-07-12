@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CODM Test Server DL Links</title>
+    
+    <link rel="icon" href="assets/images/favicon.png" type="image/png" />
+    
+    <link rel="stylesheet" href="assets/fontawesome-free-7.3.0-web/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/notarobot.css" />
+    <link rel="stylesheet" href="css/featuredvideos.css" />
+    
+  </head>
+  <body>
+    <div class="mobile-container">
+      <div class="card">
+        <img src="assets/images/codm-logo.png" alt="Call of Duty Mobile" class="codm-logo" />
+        <div class="header">
+          <h1>CODM Test Server</h1>
+          <p class="subtitle">Official Test Server Download Links</p>
+        </div>
+        <div id="lastUpdated" class="last-updated">
+          <i class="fa-solid fa-rocket"></i>
+          Last Updated: Loading...
+        </div>
+        <div class="intro-box">
+          <h2>Available Downloads</h2>
+          <p>
+            This page provides the latest official Call of Duty: Mobile Test Server
+            download links for all supported platforms.
+          </p>
+          <ul>
+            <li>
+              <strong>
+                <i class="fa-brands fa-apple"></i>
+                iOS (TestFlight)
+              </strong>
+              <br>
+              For iPhone and iPad users. Requires Apple's TestFlight app to install the test server.
+            </li>
+            <li>
+              <strong>
+                <i class="fa-brands fa-android"></i>
+                Android (32-bit)
+              </strong>
+              <br>
+              Intended for Android devices using a 32-bit processor.
+            </li>
+            <li>
+              <strong>
+                <i class="fa-brands fa-android"></i>
+                Android (64-bit)</strong><br>
+              Intended for most modern Android devices with a 64-bit processor.
+            </li>
+          </ul>
+          <p>
+            If you're unsure which Android version to download, the <strong>64-bit</strong> version is compatible with most newer devices.
+          </p>
+        </div>
+        <div class="links-wrapper">
+          <div id="linksContainer">
+            <div class="disclaimer">Loading official download links...</div>
+          </div>
+          <div id="verifyOverlay" class="verify-overlay">
+            <div class="verify-box">
+              <h2>Verification Required</h2>
+              <p class="verify-text">
+                To verify that you're not an automated bot, please enter the verification code shown in
+                the video below.
+              </p>
+              <input type="text" id="verifyCode" placeholder="Enter verification code" />
+              <a id="videoSource" target="_blank">
+                <i class="fa-regular fa-circle-play"></i>
+                Watch Video to Get the Code </a>
+              <div class="video-container">
+                <iframe
+                  id="videoEmbed"
+                  src=""
+                  title="Verification Video"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                  >
+                </iframe>
+              </div>
+              <button id="unlockButton">Unlock Download Links</button>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">
+          <h2>Disclaimer</h2>
+          <p>
+            This website is an independent community-created page and is
+            <strong
+              >not affiliated with, endorsed by, or sponsored by Activision Publishing, Inc., TiMi Studio
+            Group, Tencent Games, Garena, or Call of Duty®: Mobile.</strong
+              >
+          </p>
+          <p>
+            The download links displayed on this page are the original publicly available links released by
+            the official developers. This website does not host, modify, or redistribute any files.
+          </p>
+          <p>
+            This website was created solely to provide players with a quick and convenient way to copy the
+            official download links whenever the original source becomes slow or temporarily inaccessible.
+          </p>
+          <p>
+            All trademarks, logos, game names, and other intellectual property belong to their respective
+            owners.
+          </p>
+        </div>
+        
+        <div id="featuredVideosSection"></div>
+        
+        <div class="footer">
+          Powered by
+          <a
+            href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ"
+            target="_blank"
+            rel="noopener noreferrer"
+            >
+          <strong>Vile Tempest</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+    <script src="data/links.js"></script>
+    <script src="data/notarobot.js"></script>
+    <script src="data/featuredvideos.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

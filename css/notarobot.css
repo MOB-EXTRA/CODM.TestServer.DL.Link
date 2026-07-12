@@ -1,0 +1,179 @@
+/* ==========================================================
+   LINKS WRAPPER
+========================================================== */
+
+.links-wrapper {
+    position: relative;
+}
+
+/* ==========================================================
+   VERIFICATION OVERLAY
+========================================================== */
+
+.verify-overlay {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    border-radius: 14px;
+
+    z-index: 20;
+
+    /* Fallback for browsers without backdrop-filter */
+    background: rgba(8, 8, 8, 0.5);
+
+    /* Frosted glass effect */
+    backdrop-filter: blur(2px) brightness(0.92);
+    -webkit-backdrop-filter: blur(2px) brightness(0.92);
+}
+
+/* ==========================================================
+   VERIFICATION BOX
+========================================================== */
+
+.verify-box {
+    width: 100%;
+
+    max-width: 340px;
+
+    background: rgba(27, 27, 27, 0.7);
+
+    border: 1px solid var(--gold);
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    text-align: center;
+
+    box-shadow: 0 0 25px rgba(255, 210, 0, 0.18);
+}
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.verify-box h2 {
+    font-family: "Oswald", sans-serif;
+
+    color: var(--gold);
+
+    font-size: 24px;
+
+    margin-bottom: 16px;
+}
+
+/* ==========================================================
+   DESCRIPTION
+========================================================== */
+
+.verify-text {
+    color: #d5d5d5;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    margin-bottom: 20px;
+}
+
+/* ==========================================================
+   INPUT
+========================================================== */
+
+#verifyCode {
+    width: 100%;
+
+    padding: 12px;
+    
+    text-align: center;
+
+    border-radius: 10px;
+
+    border: 1px solid #444;
+
+    background: #101010;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    margin-bottom: 16px;
+
+    transition: 0.2s;
+}
+
+#verifyCode:focus {
+    outline: none;
+
+    border-color: var(--gold);
+
+    box-shadow: 0 0 10px rgba(255, 210, 0, 0.25);
+}
+
+/* ==========================================================
+   VIDEO LINK
+========================================================== */
+
+#videoSource {
+    display: block;
+
+    margin-bottom: 18px;
+
+    color: var(--link);
+    
+    font-style: italic;
+    text-decoration: underline;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+#videoSource:hover {
+    color: var(--gold);
+
+    text-decoration: underline;
+}
+
+/* ==========================================================
+   EMBEDDED VIDEO
+========================================================== */
+
+.video-container {
+    width: 100%;
+
+    margin-bottom: 18px;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255, 210, 0, 0.25);
+
+    background: #000;
+}
+
+.video-container iframe {
+    display: block;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    border: 0;
+}
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+#unlockButton {
+    width: 100%;
+}
