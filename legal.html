@@ -120,7 +120,7 @@
 
         </div>
         
-        <div class="footer">
+        <div class="site-footer">
           &copy; 2026 <strong>MOB EXTRA</strong>
         </div>
       </div>
@@ -145,6 +145,14 @@
               privacySec.classList.remove('active');
           }
       }
+      window.addEventListener('DOMContentLoaded', () => {
+          const hash = window.location.hash;
+          if (hash === '#terms') {
+              switchTab('terms');
+          } else {
+              switchTab('privacy'); // Fallback default state
+          }
+      });
     </script>
   </body>
 </html>
