@@ -67,40 +67,50 @@
           <i class="fa-solid fa-rocket"></i> Checking Server Status...
         </div>
 
-        <!-- Documentation Informational Box -->
+        <!-- Documentation Informational Box (Collapsible) -->
         <div class="intro-box">
           <h2>Available Downloads</h2>
           <p>
             Access the newest public test builds deployed by the developers. Please select the appropriate package file optimized for your mobile device specifications below:
           </p>
-          <ul>
-            <li>
-              <strong>
-                <i class="fa-brands fa-apple"></i> iOS Build (Apple TestFlight)
-              </strong>
-              <br />
-              Designed for iPhone and iPad environments. Requires Apple's native TestFlight application. <em>Note: Slot capacity is limited by developer project pools.</em>
-            </li>
-            <li>
-              <strong>
-                <i class="fa-brands fa-android"></i> Android Build (32-Bit)
-              </strong>
-              <br />
-              Legacy deployment optimized for older mobile chipsets or budget hardware configurations.
-            </li>
-            <li>
-              <strong>
-                <i class="fa-brands fa-android"></i> Android Build (64-Bit)
-              </strong>
-              <br />
-              High-performance deployment package recommended for modern Android devices using up-to-date processors.
-            </li>
-          </ul>
-          <p>
-            If you are uncertain about your processor configuration, the <strong>64-bit build</strong> provides optimal compatibility and stability on newer flagship devices.
-          </p>
+          
+          <!-- Collapsible content drawer wrapper -->
+          <div id="introContentDrawer" class="intro-drawer">
+            <ul>
+              <li>
+                <strong>
+                  <i class="fa-brands fa-apple"></i> iOS Build (Apple TestFlight)
+                </strong>
+                <br />
+                Designed for iPhone and iPad environments. Requires Apple's native TestFlight application. <em>Note: Slot capacity is limited by developer project pools.</em>
+              </li>
+              <li>
+                <strong>
+                  <i class="fa-brands fa-android"></i> Android Build (32-Bit)
+                </strong>
+                <br />
+                Legacy deployment optimized for older mobile chipsets or budget hardware configurations.
+              </li>
+              <li>
+                <strong>
+                  <i class="fa-brands fa-android"></i> Android Build (64-Bit)
+                </strong>
+                <br />
+                High-performance deployment package recommended for modern Android devices using up-to-date processors.
+              </li>
+            </ul>
+            <p>
+              If you are uncertain about your processor configuration, the <strong>64-bit build</strong> provides optimal compatibility and stability on newer flagship devices.
+            </p>
+          </div>
+
+          <!-- Read More / Show Less Toggle Controls -->
+          <button id="toggleIntroBtn" class="btn-toggle-intro">
+            <span>Read More</span> <i class="fa-solid fa-chevron-down"></i>
+          </button>
         </div>
 
+        
         <!-- Download & Security Verification Section -->
         <div class="links-wrapper">
           <div id="linksContainer">

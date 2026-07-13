@@ -315,18 +315,38 @@ window.addEventListener("load", () => {
         }
     });
 
-        // Native Multi-Platform Universal Sharing Logic (Dynamically updated from testServerData)
+    // Collapsible Description System for Available Downloads Box
+    const toggleBtn = document.getElementById("toggleIntroBtn");
+    const drawer = document.getElementById("introContentDrawer");
+
+    if (toggleBtn && drawer) {
+        toggleBtn.addEventListener("click", () => {
+            drawer.classList.toggle("expanded");
+            toggleBtn.classList.toggle("active");
+
+            const label = toggleBtn.querySelector("span");
+            if (drawer.classList.contains("expanded")) {
+                label.textContent = "Show Less";
+            } else {
+                label.textContent = "Read More";
+            }
+        });
+    }
+
+    // Native Multi-Platform Universal Sharing Logic (Dynamically updated from testServerData)
     const shareBtn = document.getElementById("shareSiteBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", () => {
             // Fallback values just in case data fails to load
             let shareTitle = 'CODM Test Server Download Links | MOB EXTRA';
-            let shareText = 'Get instant access to the latest official Call of Duty: Mobile Test Server download links!';
+            // Added \n\n below to break lines cleanly for the fallback message
+            let shareText = 'Get instant access to the latest official Call of Duty: Mobile Test Server download links!\n\n';
 
             // Dynamically build the text if testServerData exists
             if (typeof testServerData !== "undefined") {
                 shareTitle = `CODM Test Server - ${testServerData.season} Hub | MOB EXTRA`;
-                shareText = `Get instant access to the latest ${testServerData.season} build (${testServerData.updateDescription})!`;
+                // Added \n\n right at the end of the dynamic sentence string
+                shareText = `Get instant access to the latest ${testServerData.season} build (${testServerData.updateDescription})!\n\n`;
             }
 
             const shareData = {
@@ -339,7 +359,8 @@ window.addEventListener("load", () => {
                 navigator.share(shareData)
                     .catch((err) => console.log('Error sharing:', err));
             } else {
-                navigator.clipboard.writeText(window.location.href)
+                // Combines text message and URL with the native line breaks intact
+                navigator.clipboard.writeText(`${shareText}${window.location.href}`)
                     .then(() => {
                         const originalText = shareBtn.innerHTML;
                         shareBtn.innerHTML = `<i class="fa-solid fa-check"></i> Link Copied!`;
