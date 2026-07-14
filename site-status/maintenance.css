@@ -1,0 +1,396 @@
+/* ==========================================
+   SITE MAINTENANCE OVERLAY STYLING
+   ========================================== */
+
+.maintenance-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-dark); 
+    z-index: 999999; 
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; 
+    padding: 30px 16px; 
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    overflow-y: auto; 
+    -webkit-overflow-scrolling: touch; 
+}
+
+/* Card Container */
+.maintenance-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    width: 100%;
+    max-width: 480px;
+    padding: 32px 24px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    box-sizing: border-box;
+    margin: auto 0; 
+    animation: cardEntrance 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.96) translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Header Animated Icon Wrapper */
+.maintenance-icon-wrapper {
+    width: 76px;
+    height: 76px;
+    background-color: rgba(255, 210, 0, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+    border: 1px solid rgba(255, 210, 0, 0.2);
+    box-shadow: 0 0 20px rgba(255, 210, 0, 0.03);
+}
+
+.maintenance-icon-wrapper i {
+    font-size: 34px;
+    color: var(--gold); 
+}
+
+/* Smooth Fade Transition Rules for Icon Rotator Loop */
+.icon-fade-element {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1;
+    transform: scale(1);
+    display: inline-block;
+}
+
+.icon-fade-element.icon-hidden {
+    opacity: 0;
+    transform: scale(0.85);
+}
+
+/* Typography styling */
+.maintenance-card h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text);
+    margin: 0 0 12px 0;
+    font-weight: 600;
+}
+
+.maintenance-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 28px 0;
+    padding: 0 8px;
+}
+
+/* Dynamic Context Information Box */
+.maintenance-info-box {
+    background-color: var(--surface-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 18px;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    flex-direction: column; 
+    gap: 4px;
+    padding: 12px 0;
+    font-size: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.info-row:first-child {
+    padding-top: 0;
+}
+
+.info-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-label {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.info-value {
+    color: var(--text);
+    line-height: 1.5;
+}
+
+.font-highlight {
+    color: var(--gold);
+    font-weight: 600;
+}
+
+/* Live Server Status Badge Layout */
+.maintenance-status-badge-container {
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;    
+    justify-content: center;
+    gap: 12px;              
+    margin-bottom: 20px;
+}
+
+.status-badge-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase; 
+}
+
+/* Badge Layout styling */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;     
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 700;
+    width: 100%;            
+    max-width: 280px;       
+    box-sizing: border-box;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Open Status Theme */
+.status-badge.status-open {
+    background-color: rgba(37, 194, 110, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(37, 194, 110, 0.2);
+}
+.status-badge.status-open .status-dot {
+    background-color: var(--success);
+    animation: pulseGlowGreen 1.8s infinite alternate;
+}
+
+/* Closed Status Theme */
+.status-badge.status-closed {
+    background-color: rgba(239, 68, 68, 0.08);
+    color: var(--danger);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+.status-badge.status-closed .status-dot {
+    background-color: var(--danger);
+}
+
+/* Unknown Status Theme */
+.status-badge.status-unknown {
+    background-color: rgba(189, 189, 189, 0.08);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+.status-badge.status-unknown .status-dot {
+    background-color: var(--text-muted);
+}
+
+@keyframes pulseGlowGreen {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 194, 110, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 6px rgba(37, 194, 110, 0);
+    }
+}
+
+/* Closed Status Inner Notice Helper block */
+.status-notice-block {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-top: 4px;
+    padding: 12px;
+    background-color: rgba(251, 191, 36, 0.03);
+    border-radius: var(--radius-sm);
+    border: 1px dashed rgba(251, 191, 36, 0.2);
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.status-notice-block strong {
+    color: var(--gold);
+}
+
+/* User guidance helper text (Footnote) */
+.maintenance-footnote {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+    padding: 12px 14px;
+    background-color: var(--surface-2);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--border-light);
+    text-align: left;
+}
+
+.maintenance-footnote strong {
+    color: var(--text);
+}
+
+.maintenance-footnote i {
+    margin-right: 6px;
+    color: var(--gold);
+}
+
+/* YouTube Announcement Block */
+.maintenance-yt-announcement {
+    background-color: rgba(239, 68, 68, 0.02);
+    border: 1px dashed rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.maintenance-yt-announcement h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: var(--danger);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.maintenance-yt-announcement p {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0 0 14px 0;
+}
+
+/* Red YouTube Action Button */
+.maintenance-yt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #ff0000;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.maintenance-yt-btn:hover {
+    background-color: #d90000;
+}
+
+.maintenance-yt-btn:active {
+    transform: scale(0.99);
+}
+
+/* Proceed Anyway Button styling */
+.btn-proceed-anyway {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    width: 100%;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-proceed-anyway i {
+    font-size: 11px;
+    transition: transform 0.2s ease;
+}
+
+.btn-proceed-anyway:hover {
+    background-color: var(--surface-2);
+    color: var(--text);
+    border-color: var(--border-light);
+}
+
+.btn-proceed-anyway:hover i {
+    transform: translateX(3px); 
+}
+
+.btn-proceed-anyway:active {
+    transform: scale(0.99);
+}
+
+/* Footer layout */
+.maintenance-footer {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+}
+
+.maintenance-footer p {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0 0 8px 0;
+}
+
+.brand-subtext {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+}
+
+.footer-creator-link {
+    color: var(--gold);
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.footer-creator-link:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
