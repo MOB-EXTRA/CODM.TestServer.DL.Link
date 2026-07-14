@@ -36,7 +36,7 @@ function loadLinks() {
             Last Updated: <strong>${testServerData.lastUpdated}</strong>
         `;
 
-        // 2. NEW: Inject the dynamic Season, Build Description, and Release Date below the title
+        // 2. Inject the dynamic Season, Build Description, and Release Date below the title
         if (badgeContainer) {
             badgeContainer.innerHTML = `
                 <div class="build-info-wrapper">
@@ -117,6 +117,11 @@ function showVerification() {
 
     document.getElementById("videoSource").href = notARobot.codeSource;
     document.getElementById("verifyOverlay").style.display = "flex";
+    
+    // Reset checkbox state upon display panel invocation
+    const checkbox = document.getElementById("disclaimerCheckbox");
+    if (checkbox) checkbox.checked = false;
+    
     updateButtonStatus();
 
     // If the YT library is already available, load the player directly
@@ -152,8 +157,8 @@ function createYTPlayer(videoId) {
             'controls': 1,
             'autoplay': 0,
             'rel': 0,
-            'enablejsapi': 1,               // 🌟 Tells YouTube to listen to tracking API events
-            'origin': window.location.origin // 🌟 Passes your website's domain securely to verify the session
+            'enablejsapi': 1,               // 🌟 Authenticates communication hooks for analytics verification
+            'origin': window.location.origin // 🌟 Transmits host domain securely to calculate valid watch sessions
         },
         events: {
             'onReady': function(e) {
@@ -168,16 +173,29 @@ function createYTPlayer(videoId) {
 
 function updateButtonStatus() {
     const unlockBtn = document.getElementById("unlockButton");
+    const checkbox = document.getElementById("disclaimerCheckbox");
     if (!unlockBtn) return;
 
-    // Instantly active and styled to match labels
-    unlockBtn.classList.remove("btn-locked");
-    unlockBtn.innerHTML = `<i class="fa-solid fa-user-check"></i> Verify & Access Downloads`;
-    unlockBtn.disabled = false;
+    // Button only activates if user commits tracking-legitimacy via checking box
+    if (checkbox && checkbox.checked) {
+        unlockBtn.classList.remove("btn-locked");
+        unlockBtn.innerHTML = `<i class="fa-solid fa-user-check"></i> Verify & Access Downloads`;
+        unlockBtn.disabled = false;
+    } else {
+        unlockBtn.classList.add("btn-locked");
+        unlockBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Accept Disclaimer Above`;
+        unlockBtn.disabled = true;
+    }
 }
 
 function unlockLinks() {
+    const checkbox = document.getElementById("disclaimerCheckbox");
     const code = document.getElementById("verifyCode").value.trim();
+
+    if (checkbox && !checkbox.checked) {
+        alert("You must acknowledge and accept the disclaimer to access the downloads.");
+        return;
+    }
 
     if (code === "") {
         alert("Please enter the verification code.");
@@ -294,8 +312,8 @@ function initFeaturedPlayers() {
                 'controls': 1,
                 'autoplay': 0,
                 'rel': 0,
-                'enablejsapi': 1,               // 🌟 Tells YouTube to listen to tracking API events
-                'origin': window.location.origin // 🌟 Passes your website's domain securely to verify the session
+                'enablejsapi': 1,               // 🌟 Authenticates communication hooks for analytics verification
+                'origin': window.location.origin // 🌟 Transmits host domain securely to calculate valid watch sessions
             },
             events: {
                 'onReady': function(e) {
@@ -324,6 +342,12 @@ window.addEventListener("load", () => {
         }
     });
 
+    // Explicitly binding the custom checkbox input event to handle UI lock toggle states
+    const disclaimerBox = document.getElementById("disclaimerCheckbox");
+    if (disclaimerBox) {
+        disclaimerBox.addEventListener("change", updateButtonStatus);
+    }
+
     // Collapsible Description System for Available Downloads Box
     const toggleBtn = document.getElementById("toggleIntroBtn");
     const drawer = document.getElementById("introContentDrawer");
@@ -346,15 +370,11 @@ window.addEventListener("load", () => {
     const shareBtn = document.getElementById("shareSiteBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", () => {
-            // Fallback values just in case data fails to load
             let shareTitle = 'CODM Test Server Download Links | MOB EXTRA';
-            // Added \n\n below to break lines cleanly for the fallback message
             let shareText = 'Get instant access to the latest official Call of Duty: Mobile Test Server download links!\n\n';
 
-            // Dynamically build the text if testServerData exists
             if (typeof testServerData !== "undefined") {
                 shareTitle = `CODM Test Server - ${testServerData.season} Hub | MOB EXTRA`;
-                // Added \n\n right at the end of the dynamic sentence string
                 shareText = `Get instant access to the latest ${testServerData.season} build (${testServerData.updateDescription})!\n\n`;
             }
 
@@ -368,7 +388,6 @@ window.addEventListener("load", () => {
                 navigator.share(shareData)
                     .catch((err) => console.log('Error sharing:', err));
             } else {
-                // Combines text message and URL with the native line breaks intact
                 navigator.clipboard.writeText(`${shareText}${window.location.href}`)
                     .then(() => {
                         const originalText = shareBtn.innerHTML;
