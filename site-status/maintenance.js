@@ -40,7 +40,7 @@
         // Notice block template for Closed OR Unknown data failures
         let serverNoticeHtml = `
             <div class="status-notice-block">
-                Don't worry! As soon as CODM opens the next test server session, the active download links will <strong>immediately appear right here</strong> on this website.
+                Don't worry! As soon as COD Mobile opens the next public test server session, the active download links will <strong>immediately appear right here</strong> on this website.
             </div>
         `;
 
@@ -141,7 +141,7 @@
         } else if (testServerData.status === 1) {
             footnoteText = "The download links are officially <strong>OPEN</strong>! Please check back in a few minutes once our website adjustments are completed to grab your copy.";
         } else {
-            footnoteText = "The Test Server is currently <strong>CLOSED / UNAVAILABLE</strong> anyway, so you aren't missing out on active downloads while we work!";
+            footnoteText = "COD Mobile Public Test Server is currently <strong>CLOSED / UNAVAILABLE</strong> anyway, so you aren't missing out on active downloads while we work!";
         }
 
         // 5. Smart Dynamic UI title text and subtitle handling
@@ -189,7 +189,7 @@
 
                 <!-- Server Status Badge Container -->
                 <div class="maintenance-status-badge-container">
-                    <span class="status-badge-title">CODM Test Server Status:</span>
+                    <span class="status-badge-title">COD Mobile Test Server Status:</span>
                     <div class="status-badge ${statusClass}">
                         <span class="status-dot"></span>
                         <span class="status-text">${serverStatusText}</span>
@@ -200,7 +200,7 @@
                 <div class="maintenance-yt-announcement">
                     <h3><i class="fa-brands fa-youtube"></i> Stay Updated on YouTube!</h3>
                     <p>
-                        Don't miss a thing while we work! Head over to my channel for the latest CODM leaks, gameplay previews, and instant updates on when the next test server build officially drops.
+                        Don't miss a thing while we work! Head over to my channel for the latest COD Mobile leaks, gameplay previews, and instant updates on when the next test server build officially drops.
                     </p>
                     <a href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ" target="_blank" rel="noopener noreferrer" class="maintenance-yt-btn">
                         <i class="fa-brands fa-youtube"></i> Visit Vile Tempest Official
