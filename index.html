@@ -2,7 +2,6 @@
 <html lang="en">
   <head>
     
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-ENB2PW2B5X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -12,9 +11,6 @@
       gtag('config', 'G-ENB2PW2B5X');
     </script>
     
-    <!-- ==========================================
-       1. META TAGS & SEO PARAMETERS
-       ========================================== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
@@ -24,15 +20,11 @@
     <meta name="author" content="Vile Tempest" />
     <meta name="robots" content="index, follow" />
 
-    <!-- Open Graph Previews (Social Media Cards) -->
     <meta property="og:title" content="CODM Test Server Download Hub | MOB EXTRA" />
     <meta property="og:description" content="Quick, direct access to official public build builds for iOS and Android platforms." />
     <meta property="og:image" content="assets/images/favicon.png" />
     <meta property="og:type" content="website" />
     
-    <!-- ==========================================
-       2. EXTERNAL RESOURCE STYLESHEETS
-       ========================================== -->
     <link rel="icon" href="assets/images/favicon.png" type="image/png" />
     
     <link rel="stylesheet" href="assets/fontawesome-free-7.3.0-web/css/all.min.css" />
@@ -43,29 +35,51 @@
     
     <link rel="stylesheet" href="site-status/maintenance.css" />
 
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(async function(OneSignal) {
+        await OneSignal.init({
+          appId: "4b75140a-e41f-40c1-8181-32ee5635f953",
+          allowLocalhostAsSecureOrigin: true,
+          serviceWorkerPath: "OneSignalSDKWorker.js",
+          serviceWorkerParam: {
+            scope: "/CODM.TestServer.DL.Link/"
+          },
+          notifyButton: {
+            enable: true,
+            size: 'large',
+            theme: 'dark',
+            position: 'bottom-right',
+            text: {
+              'tip.state.unsubscribed': 'Get CODM Test Server Alerts',
+              'tip.state.subscribed': "You're all set!",
+              'dialog.main.title': 'Test Server Updates',
+              'dialog.main.button.subscribe': 'GET ALERTS',
+              'dialog.main.button.unsubscribe': 'STOP ALERTS'
+            }
+          }
+        });
+      });
+    </script>
+
   </head>
   <body>
 
-    <!-- ==========================================
-       3. APPLICATION CONTAINER SHELL
-       ========================================== -->
     <div class="mobile-container">
       <div class="card">
         
-        <!-- Platform Branding Header Image -->
         <img src="assets/images/codm-logo.png" alt="Call of Duty Mobile" class="codm-logo" />
         
-        <!-- Application Hero Area -->
         <div class="header">
-          <h1>CODM Test Server</h1>
+          <h1>CODM Test Server <br /> (Test Site)</h1>
           <p class="subtitle">Official Public Beta & Test Server Hub</p>
           
-          <!-- Dynamic Badge System Target Row -->
           <div id="buildBadgeContainer"></div>
           
           <div class="credits-box">
             <span>Developed & Maintained by</span><br />
-            <a href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ" target="_blank" class="credits-link">
+            <a href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ" target="_blank" rel="noopener noreferrer" class="credits-link">
               Vile Tempest @ MOB EXTRA
             </a>
           </div>
@@ -77,19 +91,16 @@
           </div>
         </div>
 
-        <!-- System Last Updated Status Bar -->
         <div id="lastUpdated" class="last-updated">
           <i class="fa-solid fa-rocket"></i> Checking Server Status...
         </div>
 
-        <!-- Documentation Informational Box (Collapsible) -->
         <div class="intro-box">
           <h2>Available Downloads</h2>
           <p>
             Access the newest public test builds deployed by the developers. Please select the appropriate package file optimized for your mobile device specifications below:
           </p>
           
-          <!-- Collapsible content drawer wrapper -->
           <div id="introContentDrawer" class="intro-drawer">
             <ul>
               <li>
@@ -119,20 +130,17 @@
             </p>
           </div>
 
-          <!-- Read More / Show Less Toggle Controls -->
           <button id="toggleIntroBtn" class="btn-toggle-intro">
             <span>Read More</span> <i class="fa-solid fa-chevron-down"></i>
           </button>
         </div>
 
         
-        <!-- Download & Security Verification Section -->
         <div class="links-wrapper">
           <div id="linksContainer">
             <div class="disclaimer">Loading official download links...</div>
           </div>
 
-          <!-- Direct In-App Browser Workaround Box -->
           <div class="instructions-box">
             <h3 class="instructions-title">
               <i class="fa-solid fa-circle-info"></i> How to use the links:
@@ -145,7 +153,6 @@
             </p>
           </div>
 
-          <!-- Dynamic Overlay Verification Node Window -->
           <div id="verifyOverlay" class="verify-overlay">
             <div class="verify-box">
               <h2>Verification Required</h2>
@@ -159,7 +166,7 @@
                 
               <input type="text" id="verifyCode" placeholder="Enter verification code" />
               
-              <a id="videoSource" target="_blank">
+              <a id="videoSource" target="_blank" rel="noopener noreferrer">
                 <i class="fa-regular fa-circle-play"></i> Watch Video to Find the Code
               </a>
                     
@@ -167,7 +174,6 @@
                 <div id="videoEmbed"></div>  
               </div>
               
-              <!--  Professional Disclaimer Checkbox -->
               <div class="disclaimer-checkbox-container">
                 <label class="custom-checkbox-label">
                   <input type="checkbox" id="disclaimerCheckbox" />
@@ -184,7 +190,6 @@
           </div>
         </div>
 
-        <!-- General Platform Legal Disclaimer -->
         <div class="disclaimer">
           <h2>Disclaimer</h2>
           <p>
@@ -198,38 +203,28 @@
           </p>
         </div>
         
-        <!-- Media Grid Injection Node Row -->
         <div id="featuredVideosSection"></div>
         
-        <!-- Cross-Channel Partner Image Group Grid -->
         <div class="logo-group">
-          <!-- MOB Mundane Channel Navigation -->
           <a href="https://www.youtube.com/channel/UCy94xzTQg2fTBQz4LD9ZBoA" target="_blank" rel="noopener noreferrer">
             <img src="assets/images/MOBMundane.png" alt="MOB Mundane Logo" class="site-logo" />
           </a>
         
-          <!-- Vile Tempest Channel Navigation -->
           <a href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ" target="_blank" rel="noopener noreferrer">
             <img src="assets/images/VileTempestOfficial.png" alt="Vile Tempest Official Logo" class="site-logo" />
           </a>
         
-          <!-- MOB Solutions Channel Navigation -->
           <a href="https://www.youtube.com/channel/UCjUlbQgLin9oQPiyG6l4z-g" target="_blank" rel="noopener noreferrer">
             <img src="assets/images/InfreeniteMOBSolutions.png" alt="Infreenite MOB Solutions Logo" class="site-logo" />
           </a>
         </div>
       
-        <!-- Premium Site Footer Architecture -->
         <footer class="site-footer">
           <div class="footer-links">
             <a href="legal.html#privacy" class="footer-nav-item">Privacy Policy</a>
             <span class="footer-divider">•</span>
             <a href="legal.html#terms" class="footer-nav-item">Terms of Service</a>
-          <!-- 
-            <span class="footer-divider">•</span>
-            <a href="mailto:support@mobextra.com" class="footer-nav-item">Contact</a>
-          -->
-        </div>
+          </div>
         
           <div class="footer-copyright">
             &copy; 2026 <span class="brand-text">MOB EXTRA</span>. All Rights Reserved.
@@ -246,10 +241,7 @@
       </div>
     </div>
 
-    <!-- ==========================================
-       4. EXTRACTED DATA AND RUNTIME CORE LOGIC
-       ========================================== -->
-     <script src="data/links.js"></script>
+    <script src="data/links.js"></script>
     <script src="data/notarobot.js"></script>
     <script src="data/featuredvideos.js"></script>
     
@@ -257,7 +249,6 @@
     
     <script src="js/script.js"></script>
     <script src="site-status/maintenance.js"></script>
-
 
   </body>
 </html>
