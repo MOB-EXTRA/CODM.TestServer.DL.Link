@@ -69,13 +69,13 @@ function loadLinks() {
         } else {
             container.innerHTML = `
                 <div class="server-closed">
-                    <h2><i class="fa-solid fa-circle-exclamation"></i> Test Server is Closed</h2>
-                    <p>The Call of Duty: Mobile Test Server is currently unavailable.</p>
+                    <h2><i class="fa-solid fa-circle-exclamation"></i> Public Test Build Closed</h2>
+                    <p>The Call of Duty: Mobile Public Test Build is currently unavailable.</p>
                     <p>Stay tuned for future updates from the official developers.</p>
                     
                     <div class="server-reassurance-note">
                         <i class="fa-solid fa-bell"></i>
-                        <span>Don't worry! As soon as CODM opens the next test server session, the active download links will immediately appear right here on this website.</span>
+                        <span>Don't worry! As soon as the developers launch the next Public Test Build session, the active download links will immediately appear right here on this website.</span>
                     </div>
                  </div>
             `;
@@ -207,6 +207,17 @@ function unlockLinks() {
         return;
     }
 
+    // 🌟 THE WATCH TIME FIX: Stop the video player immediately before hiding the overlay.
+    // This cleanly saves and submits the user's watch hours to YouTube instead of letting
+    // the video play illegally in a hidden container (which YouTube ignores/deletes).
+    if (ytPlayer && typeof ytPlayer.stopVideo === 'function') {
+        try {
+            ytPlayer.stopVideo();
+        } catch (err) {
+            console.warn("Could not stop player cleanly:", err);
+        }
+    }
+
     document.getElementById("verifyOverlay").style.display = "none";
 }
 
@@ -294,6 +305,9 @@ function loadFeaturedVideos() {
 }
 
 function initFeaturedPlayers() {
+    // We make sure 'featuredVideos' actually exists before trying to loop through it.
+    if (typeof featuredVideos === "undefined") return;
+    
     if (featuredPlayers.length > 0) return; // Prevent duplicating featured content instances
 
     featuredVideos.forEach((video, index) => {
@@ -334,13 +348,19 @@ window.addEventListener("load", () => {
     loadFeaturedVideos();
 
     // Assign event listeners cleanly via addEventListener
-    document.getElementById("unlockButton").addEventListener("click", unlockLinks);
+    const unlockBtn = document.getElementById("unlockButton");
+    if (unlockBtn) {
+        unlockBtn.addEventListener("click", unlockLinks);
+    }
     
-    document.getElementById("verifyCode").addEventListener("keydown", function(e) {
-        if (e.key === "Enter") {
-            unlockLinks();
-        }
-    });
+    const verifyCodeInput = document.getElementById("verifyCode");
+    if (verifyCodeInput) {
+        verifyCodeInput.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+                unlockLinks();
+            }
+        });
+    }
 
     // Explicitly binding the custom checkbox input event to handle UI lock toggle states
     const disclaimerBox = document.getElementById("disclaimerCheckbox");
