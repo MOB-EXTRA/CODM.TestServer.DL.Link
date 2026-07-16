@@ -61,6 +61,7 @@ OneSignalDeferred.push(async function(OneSignal) {
 
         document.getElementById('mob-action-btn').addEventListener('click', function() {
             alert("Tip: Tap the three dots (⋮) in the top-right corner of your screen and select 'Open in Browser'.");
+            banner.remove();
         });
     }, 8000);
 });
