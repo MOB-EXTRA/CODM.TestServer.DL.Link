@@ -8,65 +8,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Roboto:wght@400;500;700&display=swap" />
     <link rel="stylesheet" href="css/style.css" />
     <style>
-      /* Specialized legal layouts adapted to your existing card architecture */
-      .legal-content {
-          padding: 24px;
-          color: var(--text-muted);
-          line-height: 1.6;
-          font-size: 14px;
-      }
-      .legal-content h2 {
-          font-family: "Oswald", sans-serif;
-          color: var(--gold);
-          text-transform: uppercase;
-          font-size: 20px;
-          margin: 24px 0 10px 0;
-          border-bottom: 1px solid var(--border);
-          padding-bottom: 4px;
-      }
-      .legal-content h2:first-of-type {
-          margin-top: 0;
-      }
-      .legal-content p {
-          margin-bottom: 14px;
-      }
-      .back-btn {
-          display: inline-block;
-          margin-bottom: 20px;
-          color: var(--gold);
-          text-decoration: none;
-          font-weight: bold;
-          font-size: 14px;
-      }
-      .back-btn:hover {
-          color: var(--text);
-      }
-      .tab-nav {
-          display: flex;
-          border-bottom: 2px solid var(--border);
-          margin-bottom: 20px;
-          gap: 10px;
-      }
-      .tab-link {
-          font-family: "Oswald", sans-serif;
-          padding: 10px 16px;
-          color: var(--text-muted);
-          text-decoration: none;
-          cursor: pointer;
-          font-size: 16px;
-          text-transform: uppercase;
-      }
-      .tab-link.active {
-          color: var(--gold);
-          border-bottom: 2px solid var(--gold);
-          margin-bottom: -2px;
-      }
-      .policy-section {
-          display: none;
-      }
-      .policy-section.active {
-          display: block;
-      }
+      .legal-content { padding: 24px; color: var(--text-muted); line-height: 1.6; font-size: 14px; }   
+      .legal-content .legal-last-updated { margin-bottom: 10px; }
+      .legal-content h2 { font-family: "Oswald", sans-serif; color: var(--gold); text-transform: uppercase; font-size: 20px; margin: 24px 0 10px 0; border-bottom: 1px solid var(--border); padding-bottom: 4px; }
+      .back-btn { display: inline-block; margin-bottom: 20px; color: var(--gold); text-decoration: none; font-weight: bold; font-size: 14px; }
+      .tab-nav { display: flex; border-bottom: 2px solid var(--border); margin-bottom: 20px; gap: 10px; }
+      .tab-link { font-family: "Oswald", sans-serif; padding: 10px 16px; color: var(--text-muted); text-decoration: none; cursor: pointer; font-size: 16px; text-transform: uppercase; }
+      .tab-link.active { color: var(--gold); border-bottom: 2px solid var(--gold); margin-bottom: -2px; }
+      .policy-section { display: none; }
+      .policy-section.active { display: block; }
     </style>
   </head>
   <body>
@@ -75,53 +25,56 @@
         <div class="legal-content">
           <a href="index.html" class="back-btn">← Back to Downloads</a>
           
-          <!-- Tab Navigation for seamless mobile switching -->
           <div class="tab-nav">
             <span id="tabPrivacy" class="tab-link active" onclick="switchTab('privacy')">Privacy Policy</span>
             <span id="tabTerms" class="tab-link" onclick="switchTab('terms')">Terms of Service</span>
           </div>
 
-          <!-- ================= PRIVACY POLICY ================= -->
           <div id="privacySection" class="policy-section active">
-            <p><strong>Last Updated:</strong> July 2026</p>
-            <p>At MOB EXTRA, accessible from your current web address, one of our main priorities is the privacy of our visitors. This Privacy Policy document outlines the types of information collected and how it is utilized.</p>
+            <p class="legal-last-updated"><strong>Last Updated:</strong> July 16, 2026</p> 
+            <p>MOB EXTRA prioritizes the privacy and security of our visitors. This policy explains how we handle data and the services we employ to improve your experience.</p>
             
-            <h2>1. Information We Do Not Collect</h2>
-            <p>We believe in absolute data minimization. MOB EXTRA does not require user registration, accounts, names, or email addresses to access download links. We do not host databases containing your personal identification profile data.</p>
+            <h2>1. Data Minimization</h2>
+            <p>We believe in data minimization. MOB EXTRA does not require user registration or personal identification. We do not collect names, emails, or personal profiles.</p>
 
-            <h2>2. Third-Party Services & APIs</h2>
-            <p>Our website utilizes third-party tools to optimize content distribution and verification. These external parties may process technical logs:</p>
+            <h2>2. Browser Storage (Local Storage)</h2>
+            <p>We use local browser storage to save your site preferences (such as notification banner status). This data is stored <strong>entirely on your device</strong>, not our servers. This is non-identifiable data and is cleared automatically if you clear your browser's cache.</p>
+
+            <h2>3. Cookies & Tracking Technologies</h2>
+            <p>We do not use our own tracking cookies. However, we utilize third-party services that may set cookies on your device:</p>
             <ul>
-              <li><strong>YouTube Iframe API:</strong> We embed official YouTube video widgets to facilitate bot verification and showcase featured media. YouTube may track views, system cookies, and engagement duration metrics subject to Google’s primary privacy guidelines.</li>
-              <li><strong>Browser Storage:</strong> Local verification processes run entirely inside your browser cache and do not transmit entered verification text strings back to an external web server.</li>
+                <li><strong>Google Analytics:</strong> Sets cookies to help us understand site traffic and usage patterns.</li>
+                <li><strong>YouTube:</strong> When you view embedded videos, YouTube may set cookies to track video engagement and system performance.</li>
             </ul>
+            <p>You can control or disable these cookies through your browser settings at any time.</p>
 
-            <h2>3. Log Files</h2>
-            <p>MOB EXTRA follows a standard procedure of using web host log files. These files automatically log technical network data when visitors browse websites (such as IP addresses, browser types, Internet Service Providers, and date/time stamps). This data is completely anonymous and used exclusively for analytical maintenance.</p>
+            <h2>4. Push Notifications (OneSignal)</h2>
+            <p>We use <strong>OneSignal</strong> for push notifications. Subscription is entirely voluntary (opt-in). If you subscribe, OneSignal processes technical tokens required to deliver alerts. We do not use this for marketing or cross-site tracking. You may disable these alerts at any time via your browser notification settings.</p>
+
+            <h2>5. Analytics & Third-Party APIs</h2>
+            <p>We use Google Analytics to maintain site performance. Third-party providers operate under their own privacy policies. By using this site, you acknowledge the use of these standard internet technologies.</p>
           </div>
 
-          <!-- ================= TERMS OF SERVICE ================= -->
           <div id="termsSection" class="policy-section">
-            <p><strong>Last Updated:</strong> July 2026</p>
-            <p>By entering and using the MOB EXTRA download hub, you explicitly agree to comply with the legal conditions listed below.</p>
+            <p class="legal-last-updated"><strong>Last Updated:</strong> July 16, 2026</p>
+            <p>By accessing the MOB EXTRA download hub, you agree to these terms.</p>
             
-            <h2>1. Use Disclaimer</h2>
-            <p>MOB EXTRA is an independent, community-driven fan directory platform. We are <strong>not affiliated, associated, authorized, or endorsed by Activision, TiMi Studio Group, Tencent Games, or Garena.</strong> All official product properties and registered logos remain the assets of their respective owners.</p>
+            <h2>1. Independent Platform</h2>
+            <p>MOB EXTRA is an independent community resource. We are <strong>not affiliated, endorsed, or associated with Activision, TiMi Studio Group, Tencent Games, or Garena.</strong> All trademarks belong to their respective owners.</p>
 
-            <h2>2. Link Routing Policy</h2>
-            <p>We do not modify, compile, host, or distribute game software binary application packages directly. All links provided route your browser directly to official public testing environments managed by the native development studios. Users access these third-party links at their own risk.</p>
+            <h2>2. Notifications & Communication</h2>
+            <p>Our push notification feature is provided "as is." While we strive to ensure timely delivery, network delays or browser restrictions are outside our control. You are responsible for managing your notification subscription status.</p>
 
-            <h2>3. Verification System Bypass</h2>
-            <p>Access to downstream links requires solving a manual anti-bot video puzzle block. Automated cracking, scraping, script injections, or deliberate attempts to circumvent our verification modules to harvest download links directly is strictly prohibited.</p>
+            <h2>3. Link Integrity</h2>
+            <p>We do not host software binary packages. All links redirect to official developer portals. By using these links, you acknowledge that you are accessing beta software, which may be unstable or subject to developer-imposed regional/slot limitations.</p>
 
-            <h2>4. Limitation of Liability</h2>
-            <p>Because these public builds are early testing server modules deployed by game development studios, they may contain structural bugs, connection instabilities, or limit player counts dynamically. MOB EXTRA is not responsible for device performance or software instabilities resulting from beta builds.</p>
+            <h2>4. Usage Conduct</h2>
+            <p>The verification system exists to maintain server stability. Any attempt to bypass, automate, or scrape our verification modules is prohibited. We reserve the right to restrict access to users who violate these integrity standards.</p>
           </div>
-
         </div>
         
-        <div class="site-footer">
-          &copy; 2026 <strong>MOB EXTRA</strong>
+        <div class="site-footer" style="padding-bottom: 20px;">
+          &copy; 2026 <strong>MOB EXTRA</strong> | Privacy by Design
         </div>
       </div>
     </div>
@@ -147,11 +100,7 @@
       }
       window.addEventListener('DOMContentLoaded', () => {
           const hash = window.location.hash;
-          if (hash === '#terms') {
-              switchTab('terms');
-          } else {
-              switchTab('privacy'); // Fallback default state
-          }
+          if (hash === '#terms') switchTab('terms');
       });
     </script>
   </body>
