@@ -1,4 +1,4 @@
-window.OneSignalDeferred = window.OneSignalDeferred || [];
+/* window.OneSignalDeferred = window.OneSignalDeferred || [];
 
 OneSignalDeferred.push(async function(OneSignal) {
     // 1. Check if user is already subscribed (Keep this immediate)
@@ -65,3 +65,4 @@ OneSignalDeferred.push(async function(OneSignal) {
         });
     }, 8000);
 });
+*/
