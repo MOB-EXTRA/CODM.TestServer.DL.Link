@@ -159,10 +159,29 @@ function unlockLinks() {
     document.getElementById("verifyOverlay").style.display = "none";
 }
 
+/**
+ * Manages the state of all progress loaders on the page.
+ * @param {string} state - 'start' or 'finish'
+ */
+function setLoaderState(state) {
+    const loaders = document.querySelectorAll(".progress-loader");
+    
+    if (state === 'start') {
+        loaders.forEach(loader => loader.classList.add("active"));
+    } else if (state === 'finish') {
+        loaders.forEach(loader => {
+            loader.classList.remove("active");
+            loader.classList.add("finished");
+        });
+    }
+}
+
 function waitForData() {
     const container = document.getElementById("linksContainer");
     const FAKE_DELAY = 5000; 
     let dots = 1;
+    
+    setLoaderState('start');
 
     container.innerHTML = `
         <div class="loading-box">
@@ -194,6 +213,7 @@ function waitForData() {
 
             // Wait for the remainder of the 10 seconds
             setTimeout(() => {
+                setLoaderState('finish');
                 clearInterval(loadingAnimation);
                 loadLinks();
             }, remaining);
@@ -202,6 +222,7 @@ function waitForData() {
 
     // Fallback: If data takes longer than 10.5s or fails to load, force finish
     setTimeout(() => {
+        setLoaderState('finish');
         clearInterval(checkData);
         clearInterval(loadingAnimation);
         loadLinks();

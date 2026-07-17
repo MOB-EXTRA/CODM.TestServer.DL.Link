@@ -791,7 +791,42 @@ button.btn-locked:hover {
 }
 
 /* ==========================================================================
-   10. RESPONSIVE MOBILE MEDIA QUERIES
+   10. REUSABLE
+===================================== */
+
+
+/* Reusable Progress Loader Class */
+.progress-loader {
+    position: relative;
+    overflow: hidden;
+    /* Ensure text stays on top of the loading bar */
+    z-index: 1;
+}
+
+.progress-loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Start at 0 */
+    background: rgba(230, 185, 30, 0.15); /* Subtle gold loading color */
+    transition: width 5s linear, background 0.3s ease; /* Matches your 5s delay */
+    z-index: -1; /* Behind the text */
+}
+
+/* State when loading starts */
+.progress-loader.active::after {
+    width: 100%;
+}
+
+/* State when loading is finished */
+.progress-loader.finished::after {
+    background: transparent; /* Makes the bar disappear */
+}
+
+/* ==========================================================================
+   11. RESPONSIVE MOBILE MEDIA QUERIES
    ========================================================================== */
 @media (max-width: 480px) {
     h1 {
