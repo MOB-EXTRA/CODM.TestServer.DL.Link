@@ -261,9 +261,37 @@ h1 {
 /* ==========================================================================
    4. INFO MODULES (Intro Box & Instructions Box)
    ========================================================================== */
+/* New Box for Definitions */
+.info-box {
+    margin: 24px 24px 0 24px; /* Matches the top margin of your intro-box */
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.info-box h3 {
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    font-size: 20px; /* Slightly smaller than H2, but stands out */
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.info-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.info-box p strong {
+    color: var(--gold);
+}
+
 /* Introduction context widget summarizing variants (iOS vs Android) */
 .intro-box {
-    margin: 24px;
+    margin: 16px 24px 24px 24px;
     background: var(--surface-2); /* Swapped to match card backgrounds nicely */
     border: 1px solid var(--border-light);
     border-left: 4px solid var(--gold);
@@ -683,11 +711,11 @@ button.btn-locked:hover {
 
 /* Individual logo adjustments */
 .yt-channels-logo {
-    display: block;          /* Removes any default inline whitespace gaps */
+    display: block;          
     max-width: 20px;
     height: auto;
-    margin: 30px auto 10px auto;
-    background-color: var( --gold);
+    /* Remove the margin here, let .logo-group handle spacing */
+    background-color: var(--gold);
     border-radius: 50%;
 }
 
