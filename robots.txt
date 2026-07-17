@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mob-extra.github.io/CODM.TestServer.DL.Link/sitemap.xml
