@@ -51,18 +51,17 @@ function loadLinks() {
 
         // 4. Render download card assets
         if (testServerData.status === 1) {
-            container.innerHTML = "";
-            testServerData.links.forEach((link, index) => {
-                container.innerHTML += `
-                    <div class="link-box">
-                        <div class="link-title">${link.device}</div>
-                        <div class="link" id="link${index}">${link.url}</div>
-                        <button onclick="copyLink('link${index}', this)">
-                             <i class="fa-regular fa-copy"></i> Copy Link
-                        </button>
-                    </div>
-                `;
-            });
+            const html = testServerData.links.map((link, index) => `
+                <div class="link-box">
+                    <div class="link-title">${link.device}</div>
+                    <div class="link" id="link${index}">${link.url}</div>
+                    <button onclick="copyLink('link${index}', this)">
+                         <i class="fa-regular fa-copy"></i> Copy Link
+                    </button>
+                </div>
+            `).join('');
+            
+            container.innerHTML = html;
             showVerification();
         } else {
             container.innerHTML = `
@@ -165,15 +164,27 @@ function unlockLinks() {
  */
 function setLoaderState(state) {
     const loaders = document.querySelectorAll(".progress-loader");
+    const content = document.getElementById('mainContentSection');
+    const badgeContainer = document.getElementById('buildBadgeContainer'); // Grab the badge
     
     if (state === 'start') {
         loaders.forEach(loader => loader.classList.add("active"));
+        content.style.display = 'none';
+        content.style.opacity = '0';
+        if (badgeContainer) badgeContainer.classList.remove('visible'); // Hide badge on restart
     } else if (state === 'finish') {
         loaders.forEach(loader => {
             loader.classList.remove("active");
             loader.classList.add("finished");
         });
-        document.getElementById('mainContentSection').style.display = 'block';
+        
+        content.style.display = 'block';
+        
+        // Trigger both animations simultaneously
+        setTimeout(() => {
+            content.style.opacity = '1';
+            if (badgeContainer) badgeContainer.classList.add('visible');
+        }, 50); 
     }
 }
 
@@ -189,21 +200,21 @@ function animateTextSequence(elementId, messages, duration) {
 
     const intervalTime = duration / messages.length;
     let index = 0;
-
-    // Set first message immediately
-    element.textContent = messages[0];
+    
+    element.innerHTML = messages[0];
 
     const timer = setInterval(() => {
         index++;
         if (index < messages.length) {
-            element.textContent = messages[index];
+            element.innerHTML = messages[index];
         } else {
             clearInterval(timer);
         }
     }, intervalTime);
 
-    return timer; // Return timer so we can clear it if data loads early
+    return timer;
 }
+
 
 function waitForData() {
     const FAKE_DELAY = 5000; // adjustable delay
@@ -216,10 +227,13 @@ function waitForData() {
     ];
     
     const linkMessages = [
-        "Loading iOS build details...",
-        "Loading Android 32-bit data...",
-        "Loading Android 64-bit data...",
-        "Preparing interface..."
+        `<i class="fa-solid fa-magnifying-glass"></i> Loading iOS build details...`,
+        `<i class="fa-regular fa-circle-check"></i> Loading iOS build details...`,
+        `<i class="fa-solid fa-magnifying-glass"></i> Loading Android 32-bit data...`,
+        `<i class="fa-regular fa-circle-check"></i> Loading Android 32-bit data...`,
+        `<i class="fa-solid fa-magnifying-glass"></i> Loading Android 64-bit data...`,
+        `<i class="fa-regular fa-circle-check"></i> Loading Android 64-bit data...`,
+        `Preparing interface...`
     ];
     
     setLoaderState('start');
@@ -296,6 +310,10 @@ function loadFeaturedVideos() {
 }
 
 function initFeaturedPlayers() {
+    // Safety check: ensure YouTube API is actually loaded
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
+        return; // Exit silently; the onYouTubeIframeAPIReady callback will handle it later
+    }
     if (typeof featuredVideos === "undefined") return;
     if (featuredPlayers.length > 0) return;
 

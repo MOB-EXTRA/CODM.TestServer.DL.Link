@@ -143,6 +143,22 @@ h1 {
     margin-top: 8px;
 }
 
+#mainContentSection, 
+#buildBadgeContainer {
+    /* Existing styles... */
+    will-change: opacity; 
+}
+
+#buildBadgeContainer {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* This class will be added via JS to trigger the fade */
+#buildBadgeContainer.visible {
+    opacity: 1;
+}
+
 /* Refactored Maintenance Credit typography elements */
 .credits-box {
     text-align: center;
@@ -261,6 +277,17 @@ h1 {
 /* ==========================================================================
    4. INFO MODULES (Intro Box & Instructions Box)
    ========================================================================== */
+#mainContentSection {
+    /* Keep display none initially for SEO/Structure */
+    display: none; 
+    
+    /* Start with invisible */
+    opacity: 0; 
+    
+    /* The magic that makes it smooth */
+    transition: opacity 0.8s ease-in-out;
+}
+
 /* New Box for Definitions */
 .info-box {
     margin: 24px 24px 0 24px; /* Matches the top margin of your intro-box */
