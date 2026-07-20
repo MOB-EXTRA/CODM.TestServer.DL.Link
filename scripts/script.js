@@ -225,20 +225,24 @@ function waitForData() {
     const FAKE_DELAY = 5000; // adjustable delay
     
     const statusMessages = [
-        "Establishing connection to deployment node...",
+        "Initializing deployment node...",
+        "Establishing secure connection...",
         "Authenticating server manifest...",
         "Syncing configuration protocols...",
-        "Secure handshake verified."
+        "Checking test server status..."
     ];
     
     const linkMessages = [
+        `<i class="fa-solid fa-cloud-arrow-down"></i> Fetching latest build info...`,
+        `<i class="fa-solid fa-server"></i> Getting version information...`,
         `<i class="fa-solid fa-magnifying-glass"></i> Syncing iOS TestFlight registry...`,
         `<i class="fa-regular fa-circle-check"></i> iOS registry validated.`,
         `<i class="fa-solid fa-magnifying-glass"></i> Syncing Android (32-bit) assets...`,
         `<i class="fa-regular fa-circle-check"></i> Android (32-bit) assets cached.`,
         `<i class="fa-solid fa-magnifying-glass"></i> Syncing Android (64-bit) assets...`,
         `<i class="fa-regular fa-circle-check"></i> Android (64-bit) assets cached.`,
-        `Finalizing deployment interface...`
+        `<i class="fa-solid fa-shield-halved"></i> Checking test server status...`,
+        `<i class="fa-solid fa-code"></i> Finalizing deployment interface...`
     ];
     
     setLoaderState('start');

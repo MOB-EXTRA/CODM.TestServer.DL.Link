@@ -649,6 +649,7 @@ button.btn-locked:hover {
 
 .loading-box p {
     color: var(--text-muted);
+    font-size: 12px;
 }
 
 /* Global Content Legal Disclaimer Section styling */
