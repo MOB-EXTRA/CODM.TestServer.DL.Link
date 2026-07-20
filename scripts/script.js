@@ -75,7 +75,7 @@ function loadLinks() {
                     <p>The Call of Duty: Mobile Public Test Build is currently unavailable.</p>
                     <p>Stay tuned for future updates from the official developers.</p>
                     <div class="server-reassurance-note">
-                        <i class="fa-solid fa-bell"></i>
+                        <i class="fa-solid fa-bell fa-swing"></i>
                         <span>Don't worry! As soon as the developers launch the next Public Test Build session, the active download links will immediately appear right here on this website.</span>
                     </div>
                  </div>
