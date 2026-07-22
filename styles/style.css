@@ -603,7 +603,7 @@ h1 {
     color: #fff;
     text-decoration: none;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     text-align: center;
     font-weight: bold;
     font-size: 0.9rem;
