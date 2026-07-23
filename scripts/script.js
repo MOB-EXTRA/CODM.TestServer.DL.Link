@@ -335,6 +335,18 @@ function loadFeaturedVideos() {
     }
 }
 
+function loadChannels() {
+    const logoGroup = document.getElementById("logoGroup");
+    if (logoGroup && typeof channelData !== "undefined") {
+        logoGroup.innerHTML = channelData.map(channel => `
+            <a href="${channel.url}" target="_blank" rel="noopener noreferrer" title="${channel.name}">
+                <img src="${channel.logo}" alt="${channel.name} Logo" class="yt-channels-logo" />
+            </a>
+        `).join("");
+    }
+}
+
+
 function initFeaturedPlayers() {
     // Safety check: ensure YouTube API is actually loaded
     if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
@@ -379,6 +391,7 @@ function initFeaturedPlayers() {
 window.addEventListener("load", () => {
     waitForData();
     loadFeaturedVideos();
+    loadChannels();
 
     const unlockBtn = document.getElementById("unlockButton");
     if (unlockBtn) {
