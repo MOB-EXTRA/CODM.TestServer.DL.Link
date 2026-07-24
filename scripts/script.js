@@ -24,8 +24,13 @@ function renderLinksHtml() {
 
     return testServerData.links.map((link, index) => `
         <div class="link-box">
-            <div class="link-title">${link.device}</div>
-            <div class="link" id="link${index}">${link.url}</div>
+            <div class="link-title">
+              ${link.device} 
+            </div>
+            <div class="link-row">
+                <img src="assets/images/${link.icon}" alt="App Icon" class="link-app-icon">
+                <div class="link" id="link${index}">${link.url}</div>
+            </div>
             <div class="link-actions">
                 <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="download-btn">
                     <i class="fa-solid fa-download"></i> Download

@@ -15,21 +15,21 @@ const testServerData = {
             device: `
             <i class="fa-brands fa-apple"></i> 
             iOS (TestFlight)`,
-            
+            icon: "codm-ts-logo-ios.png",
             url: "https://testflight.apple.com/join/7M4pPKqb"
         },
         {
             device: `
             <i class="fa-brands fa-android"></i>
             Android (32-bit)`,
-            
+            icon: "codm-ts-logo-A32.png",
             url: "https://ms.spr.ly/CODM_32bit_0611"
         },
         {
             device: `
             <i class="fa-brands fa-android"></i> 
             Android (64-bit)`,
-            
+            icon: "codm-ts-logo-A64.png",
             url: "https://ms.spr.ly/CODM_64bit_0611"
         }
     ]

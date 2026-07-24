@@ -234,6 +234,20 @@ body {
     pointer-events: none; /* Allows clicks to pass through */
 }
 
+/* Disable text selection, context menus, and long-press image saving in the hero banner */
+.hero-banner-wrapper {
+    -webkit-touch-callout: none; /* Disables iOS callout popup on long-press */
+    -webkit-user-select: none;   /* Safari */
+    user-select: none;           /* Standard syntax */
+}
+
+/* Specifically target images and badges inside the hero banner to prevent dragging/saving */
+.hero-banner-wrapper img,
+.hero-banner-wrapper span {
+    -webkit-touch-callout: none;
+    -webkit-user-drag: none;     /* Prevents dragging images */
+    user-select: none;
+}
 
 /* ==========================================================================
    4. HEADER & NOTICE ELEMENTS
@@ -577,6 +591,28 @@ h1 {
     font-size: 20px;
     margin-bottom: 10px;
 }    
+
+.link-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the icon and the link box */
+    margin: 10px 0;
+}
+
+.link-row .link {
+    flex: 1; /* Makes the link box stretch to fill the remaining space */
+    margin-bottom: 0; /* Clear out old margins */
+}
+
+.link-app-icon {
+    width: 51px;
+    height: 51px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-left: 8px;
+    border: 1px solid var(--border);
+    border-radius: 30%;
+}
 
 .link {
     background: #0b0b0b;
