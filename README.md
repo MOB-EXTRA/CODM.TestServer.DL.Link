@@ -2,7 +2,7 @@
 
 A fast, mobile-friendly hub for Call of Duty: Mobile (CODM) players to access direct, high-speed download links for the official CODM Public Test Server (PTB) builds across both iOS (TestFlight) and Android (APK).
 
-![CODM PTB Hub Banner](og-image.png)
+![CODM PTB Hub Banner](assets/images/favicon.png)
 
 ---
 
