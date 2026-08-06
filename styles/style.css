@@ -1,0 +1,1187 @@
+/* ==========================================================================
+   1. FONTS & ROOT VARIABLES
+   ========================================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap");
+
+:root {
+    --bg: #050505;
+    --bg-dark: #000000;         
+    --surface: #111111;
+    --surface-2: #181818;
+    --border: #303030;
+    --border-light: #404040;
+    --text: #ffffff;
+    --text-muted: #bdbdbd;
+    --gold: #FFB800;           
+    --gold-hover: #FFC840;
+    --blue: #2b7bd8;
+    --blue-hover: #1d6cc7;
+    --link: #66aaff;
+    --success: #25c26e;
+    --warning: #fbbf24;
+    --danger: #ef4444;
+    --bg-error: #350c0c;        
+    --radius: 18px;
+    --radius-sm: 10px;          
+    --radius-md: 14px;          
+    --shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+}
+
+
+/* ==========================================================================
+   2. GLOBAL RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    -webkit-touch-callout: none; /* Disables long-press menu on iOS */
+    -webkit-user-select: none;   /* Safari */
+    -khtml-user-select: none;    /* Konqueror HTML */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Standard */
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    background: linear-gradient(180deg, var(--bg-dark), #090909 35%, var(--surface));
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100dvh;
+    padding: 20px;
+}
+
+/* Container locking the app layout to a smartphone aspect footprint */
+.mobile-container {
+    width: 100%;
+    max-width: 420px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow:
+        var(--shadow),
+        0 0 20px rgba(255, 210, 0, 0.05);
+}
+
+
+/* ==========================================================================
+   3. HERO BANNER SECTION
+   ========================================================================== */
+.hero-banner-wrapper {
+    position: relative;
+    width: 100%;
+    height: 260px; /* Fixed height guarantees space for background and loading line */
+    background: var(--bg-dark);
+    overflow: hidden;
+    border-top-left-radius: var(--radius);
+    border-top-right-radius: var(--radius);
+}
+
+/* Layer 1: Background Image (1B) */
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0.85;
+    animation: bgZoomShake 20s ease-in-out infinite;
+}
+
+/* Dark Gradient Overlay */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(5,5,5,0.3) 0%, rgba(5,5,5,0.85) 100%);
+    z-index: 2;
+}
+
+.mob-extra-logo {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 35px;
+    z-index: 2; /* Sits directly above .hero-bg (z-index: 1) but behind text/characters (z-index: 3+) */
+    pointer-events: none;
+}
+
+/* Layer 2: Top text ("CODM PTB HUB") - Vertically centered behind Character (1A) */
+.hero-badge-top {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+    z-index: 3;
+    font-family: "Roboto", sans-serif;
+    color: var(--text-muted);
+    font-size: 35px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
+}
+
+.hero-badge-top .gold-text {
+    color: var(--gold);
+}
+
+/* Layer 3: Character Container (1A) with Organic Float Animation */
+.hero-character-container {
+    position: absolute;
+    bottom: -15px; /* Pushes cut-off edges out of bounds */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120%; /* Zoomed in to hide missing legs */
+    z-index: 4;
+    animation: organicFloat 6s ease-in-out infinite;
+}
+
+.hero-character {
+    display: block;
+    width: 90%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8));
+}
+
+/* Layer 4: Main Title ("TEST SERVER") - Vertically centered in front of character */
+.hero-badge-main {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+    z-index: 5;
+    font-family: "Oswald", sans-serif;
+    color: var(--gold);
+    font-size: 50px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.1;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 184, 0, 0.5);
+}
+
+.hero-banner-sub {
+    position: absolute;
+    top: 94%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    text-align: center;
+    z-index: 5;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+    opacity: 0.9;
+}
+
+/* Layer 5: Pinned Loading Line at the absolute bottom */
+.hero-banner-wrapper .loading-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 7;
+}
+
+.loading-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Adjusted percentages for a smaller gap */
+    background: linear-gradient(
+        90deg, 
+        var(--gold) 0%, var(--gold) 45%,      /* Bar 1 ends at 45% */
+        transparent 45%, transparent 50%,     /* Gap 1 (5% wide) */
+        var(--gold) 50%, var(--gold) 95%,     /* Bar 2 ends at 95% */
+        transparent 95%, transparent 100%     /* Gap 2 (5% wide) */
+    );
+    
+    background-size: 200% 100%;
+    animation: loading-slide 3s linear infinite;
+}
+
+/* Bottom fade-to-dark overlay (fades out the bottom 20% into the dark background) */
+.hero-banner-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15%; /* Covers the bottom 15% of the section height */
+    background: linear-gradient(to bottom, rgba(18, 18, 18, 0) 0%, var(--bg-dark) 100%);
+    z-index: 6; /* Ensures it sits on top of the images and loading line */
+    pointer-events: none; /* Allows clicks to pass through */
+}
+
+/* Position the loading box directly in front inside the hero banner */
+.hero-banner-wrapper .loading-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 8; /* Higher than the badges and character */
+    width: 85%;
+    background: transparent; /* Removes the dark background color */
+    backdrop-filter: none;   /* Removes the blur effect */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    text-align: center;
+}
+
+.hero-banner-wrapper .loading-box p {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+/* Hidden state when data loads */
+.hero-banner-wrapper .loading-box.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   4. HEADER & NOTICE ELEMENTS
+   ========================================================================== */
+.header {
+    padding: 10px 22px 4px;
+}
+
+h1 {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 40px;
+    text-align: center;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 15px;
+    margin-top: 8px;
+}
+
+#mainContentSection, 
+#buildBadgeContainer {
+    /* Existing styles... */
+    will-change: opacity; 
+}
+
+#buildBadgeContainer {
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+/* This class will be added via JS to trigger the fade */
+#buildBadgeContainer.visible {
+    opacity: 1;
+}
+
+/* Refactored Maintenance Credit typography elements */
+.credits-box {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #8b8b8b;
+    line-height: 1.5;
+}
+
+.credits-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.share-area {
+    text-align: center;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0 4px;
+}
+
+/* Share Button (Fixed Size) */
+.btn-share {
+    flex: 0 0 140px; /* Prevents growing or shrinking; sets a locked width */
+    background: var(--gold);
+    color: var(--bg-dark);
+    border: none;
+    padding: 11px 14px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13.5px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-share:hover {
+    background: var(--gold-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 184, 0, 0.25);
+}
+
+.btn-share:active {
+    transform: scale(0.98);
+}
+
+/* Community Button (Fixed Size) */
+.btn-community {
+    flex: 0 0 140px; /* Locked to the exact same fixed dimensions */
+    background: #ff0000;
+    color: #ffffff;
+    border: none;
+    padding: 11px 14px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 13.5px;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-community:hover {
+    background: #e60000;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 0, 0, 0.35);
+}
+
+.btn-community:active {
+    transform: scale(0.98);
+}
+
+/* ==========================================================================
+   5. LAST UPDATED STATUS LOADER & BUILD INFO BADGES
+   ========================================================================== */
+.last-updated {
+    margin: 10px 24px; /* Reduced vertical gap */
+    padding: 8px 12px; /* Slimmer */
+    background: rgba(255, 255, 255, 0.03); /* Subtle, non-intrusive background */
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    
+    /* Centering everything nicely */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.last-updated strong {
+    color: var(--gold);
+}
+
+.lu-status-badge {
+    background-color: var(--success);
+    font-size: 12px;
+    color: #000000;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulseGlowGreen 1.8s infinite alternate;
+}
+
+.lu-status-badge.offline {
+    background-color: var(--danger);
+    color: #ffffff;
+    animation: pulseGlowRed 1.8s infinite alternate;
+}
+
+.lu-status-badge.unknown {
+    background-color: var(--warning);
+    color: #000000;
+}
+
+.build-info-wrapper {
+    margin: 14px auto 0 auto;
+    padding: 12px;
+    background: var(--surface-2);
+    border: 1px dashed var(--border-light);
+    border-radius: var(--radius-sm);
+    text-align: center;
+}
+
+.build-meta-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.badge-season {
+    background: var(--gold);
+    color: var(--surface);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.badge-date {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.build-desc {
+    margin: 0;
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   6. INFO MODULES (Intro Box & Instructions Box)
+   ========================================================================== */
+/* New Box for Definitions */
+.info-box {
+    margin: 24px 24px 0 24px; /* Matches the top margin of your intro-box */
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 20px;
+}
+
+.info-box h3 {
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    font-size: 20px; /* Slightly smaller than H2, but stands out */
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.info-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.info-box p strong {
+    color: var(--gold);
+}
+
+/* Introduction context widget summarizing variants (iOS vs Android) */
+.intro-box {
+    margin: 16px 24px 24px 24px;
+    background: var(--surface-2); /* Swapped to match card backgrounds nicely */
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    position: relative;
+}
+
+.intro-box h2 {
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    margin-bottom: 10px;
+}
+
+.intro-box p {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Collapsible Section Layout Rules */
+.intro-drawer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* State modification when active via JS class toggling */
+.intro-drawer.expanded {
+    max-height: 800px; /* Safely accommodates full expanded lists */
+}
+
+.intro-box ul {
+    margin: 16px 0;
+    padding-left: 18px;
+}
+
+.intro-box li {
+    margin-bottom: 14px;
+    color: var(--text);
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+
+.intro-box li strong {
+    color: var(--gold);
+}
+
+/* Custom Mini UI Trigger Buttons */
+.btn-toggle-intro {
+    width: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    padding: 6px 14px;
+    background: rgba(255, 210, 0, 0.08);
+    border: 1px solid rgba(255, 210, 0, 0.2);
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 20px; /* Rounded pill style looks premium */
+    transition: all 0.2s ease;
+}
+
+.btn-toggle-intro:hover {
+    background: var(--gold);
+    color: var(--surface);
+    border-color: var(--gold);
+}
+
+.btn-toggle-intro i {
+    transition: transform 0.3s ease;
+    font-size: 10px;
+}
+
+/* Rotates chevron arrow smoothly upward when opened */
+.btn-toggle-intro.active i {
+    transform: rotate(180deg);
+}
+
+/* User help instructions detailing safe clipboard paste actions */
+.instructions-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(255, 210, 0, 0.05);
+    border-left: 4px solid var(--gold);
+    text-align: left;
+}
+
+.instructions-title {
+    color: var(--gold);
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.instructions-text {
+    margin: 0;
+    font-size: 13px;
+    color: #e0e0e0;
+    line-height: 1.5;
+}
+
+.instructions-note {
+    margin: 8px 0 0 0;
+    font-size: 12px;
+    color: #8b8b8b;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+
+/* ==========================================================================
+   7. INTERACTIVE BUTTONS, LINKS HOUSING & VERIFICATION SYSTEM
+   ========================================================================== */
+#linksContainer {
+    padding: 0 24px;
+}
+
+.link-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    margin-bottom: 18px;
+    transition: 0.25s;
+}
+
+.link-box:hover {
+    border-color: var(--gold);
+    transform: translateY(-2px);
+}
+
+.link-title {
+    font-family: "Oswald", sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.link-row {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between the icon and the link box */
+    margin: 10px 0;
+}
+
+.link-row .link {
+    flex: 1; /* Makes the link box stretch to fill the remaining space */
+    margin-bottom: 0; /* Clear out old margins */
+}
+
+.link-app-icon {
+    width: 51px;
+    height: 51px;
+    object-fit: contain;
+    vertical-align: middle;
+    border: 1px solid var(--border);
+    border-radius: 30%;
+}
+
+.link {
+    background: #0b0b0b;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--link);
+    margin-bottom: 14px;
+    word-break: break-word;
+    font-size: 16px; 
+    padding: 0px 10px;
+    height: 51px;
+    display: flex;           /* Enables flexbox container */
+    align-items: center;     /* Vertically centers the text */
+}
+
+
+/* Container for the side-by-side buttons */
+.link-actions {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    margin-top: 10px;
+}
+
+/* Shared Button Styles */
+.download-btn,
+button {
+    padding: 13px;
+    border-radius: var(--radius-sm);
+    transition: 0.2s;
+}
+
+/* Download Button */
+.download-btn {
+    flex: 1;
+    color: #fff;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.download-btn:hover {
+    background: #444;
+}
+
+/* Global Button Default */
+button {
+    width: 100%;
+    border: none;
+    background: var(--gold);
+    color: var(--surface);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+/* Link Box Copy Button Override */
+.link-box button {
+    flex: 1;
+    margin: 0;
+}
+
+button:hover {
+    background: var(--gold-hover);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+/* Visual state applied when JavaScript signals active time tracking is locked */
+button.btn-locked {
+    background: #2a2a2a;
+    color: #888888;
+    border: 1px solid var(--border);
+    cursor: not-allowed;
+}
+
+button.btn-locked:hover {
+    background: #2a2a2a;
+}
+
+/* Secure Video Aspect Ratio Container fixes for API rendering windows */
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* Fixed 16:9 Aspect Ratio setup */
+    background: var(--bg-dark);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    margin: 14px 0;
+    border: 1px solid var(--border);
+}
+
+.video-container div, 
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.section-title {
+    position: relative;
+    display: inline-block;
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    font-size: 38px;
+    margin-bottom: 28px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 25px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 999px;
+}
+
+/* ==========================================================================
+   8. SYSTEM LOAD & STATE MESSAGE WRAPPERS
+   ========================================================================== */
+.disclaimer,
+.server-closed,
+.load-error {
+    margin: 24px;
+    padding: 18px;
+    border-radius: var(--radius-md);
+    line-height: 1.7;
+}
+
+
+
+.loader {
+    width: 42px;
+    height: 42px;
+    margin: 0 auto 16px;
+    border: 4px solid #3b3b3b;
+    border-top: 4px solid var(--gold);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+
+
+/* Global Content Legal Disclaimer Section styling */
+.disclaimer {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: #d0d0d0;
+    font-size: 13px;
+}
+
+.disclaimer h2 {
+    font-family: "Oswald", sans-serif;
+    color: var(--gold);
+    margin-bottom: 10px;
+}
+
+.disclaimer p:not(:last-child) {
+    margin-bottom: 12px;
+}
+
+/* API Fallback State: Server closed distribution active */
+.server-closed {
+    padding: 32px 24px;
+    background: linear-gradient(180deg, rgba(239, 68, 68, 0.1) 0%, rgba(10, 10, 10, 0.6) 100%), #141414;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: var(--radius-md);
+    text-align: center;
+    box-shadow: 
+        0 12px 30px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: pulseGlowRed 1.5s infinite;
+}
+
+.server-closed i {
+    font-size: 36px;
+    color: var(--danger);
+    margin-bottom: 16px;
+    text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+.server-closed h2 {
+    font-family: "Oswald", sans-serif;
+    color: #ffffff;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+}
+
+.server-closed p {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    line-height: 1.6;
+    margin: 0 0 6px 0;
+    max-width: 280px; /* Keeps text box snug & balanced */
+}
+
+.server-closed p:last-of-type {
+    margin-bottom: 0;
+    font-size: 12px;
+    color: #6a6a6a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Reassurance banner inside closed server state container */
+.server-reassurance-note {
+    display: flex;
+    flex-direction: column; /* Vertical alignment: places bell directly above text */
+    align-items: center; /* Centers both the bell and text blocks horizontally */
+    gap: 8px; /* Balanced spacing between the bell icon and text */
+    margin: 20px auto 0 auto;
+    padding: 14px 16px;
+    background: rgba(255, 210, 0, 0.05);
+    border: 1px solid rgba(255, 210, 0, 0.2);
+    border-radius: var(--radius-sm);
+    text-align: center; /* Clean, centered text paragraphs */
+    max-width: 90%;
+    box-sizing: border-box;
+}
+
+/* Gold bell alert icon tracking fixes */
+.server-reassurance-note i {
+    color: var(--gold);
+    font-size: 18px; /* Slightly larger so it looks like a clean section badge */
+    margin-top: 0;
+    margin-bottom: 2px;
+    text-shadow: 0 0 10px rgba(255, 210, 0, 0.4);
+    flex-shrink: 0;
+}
+
+/* Notice description formatting text block */
+.server-reassurance-note span {
+    color: #e2e2e2;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+/* Styling for the show-links button */
+.server-closed .show-links {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    max-width: 90%;
+    margin-top: 14px;
+    background: rgba(255, 77, 77, 0.08);
+    border: 1px solid rgba(255, 77, 77, 0.3);
+    color: #ff4d4d;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.server-closed .show-links:hover {
+    background: rgba(255, 77, 77, 0.18);
+    border-color: rgba(255, 77, 77, 0.6);
+}
+
+.server-closed .show-links i {
+    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+/* API Fallback State: Script link fail/offline block */
+.load-error {
+    margin: 0;
+    background: var(--bg-error);
+    border: 2px solid var(--danger);
+    text-align: center;
+    animation: pulseGlowRed 1.5s infinite;
+}
+
+
+/* ==========================================================================
+   9. LOGO GROUP & FOOTER STYLING
+   ========================================================================== */
+/* Container to align the logos horizontally */
+.logo-group {
+    display: flex;
+    justify-content: center; /* Centers them horizontally */
+    align-items: center;     /* Centers them vertically relative to each other */
+    gap: 20px;               /* Space between each logo */
+    margin: 30px auto 10px auto;
+}
+
+/* Individual logo adjustments */
+.yt-channels-logo {
+    display: block;          
+    max-width: 20px;
+    height: auto;
+    /* Remove the margin here, let .logo-group handle spacing */
+    background-color: var(--gold);
+    border-radius: 50%;
+}
+
+.logo-group a:nth-child(2) .yt-channels-logo {
+    max-width: 35px; 
+}
+
+.logo-group a {
+    display: inline-block;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+/* Subtle hover effect to show mobile users the logos are clickable */
+.logo-group a:hover {
+    transform: scale(1.08);
+}
+
+.site-footer {
+    margin: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border); /* Visual separation border above footer */
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* Legal and support utility nav rows styling */
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.footer-nav-item {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-nav-item:hover {
+    color: var(--text);
+}
+
+.footer-divider {
+    color: var(--border-light);
+    margin: 0 6px;
+}
+
+/* Core platform copyright labels */
+.footer-copyright {
+    color: #6a6a6a;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.brand-text {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Creator attribution text blocks styling */
+.footer-powered {
+    color: #8b8b8b;
+    font-size: 12px;
+}
+
+.credit-link {
+    color: var(--gold);
+    text-decoration: none;
+}
+
+.credit-link:hover {
+    color: var(--text);
+    text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   10. REUSABLE UTILITIES & PROGRESS LOADER
+   ========================================================================== */
+/* Reusable Progress Loader Class */
+.progress-loader {
+    position: relative;
+    overflow: hidden;
+    /* Ensure text stays on top of the loading bar */
+    z-index: 1;
+}
+
+.progress-loader::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%; /* Start at 0 */
+    background: rgba(230, 185, 30, 0.15); /* Subtle gold loading color */
+    transition: width 5s linear, background 0.3s ease; /* Matches your 5s delay */
+    z-index: -1; /* Behind the text */
+}
+
+/* State when loading starts */
+.progress-loader.active::after {
+    width: 100%;
+}
+
+/* State when loading is finished */
+.progress-loader.finished::after {
+    background: transparent; /* Makes the bar disappear */
+}
+
+
+/* ==========================================================================
+   11. CSS KEYFRAME ANIMATIONS
+   ========================================================================== */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulseGlowGreen {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 194, 110, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 6px rgba(37, 194, 110, 0);
+    }
+}
+
+@keyframes pulseGlowRed {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5);
+    }
+    100% {
+        box-shadow: 0 0 0 6px rgba(239, 68, 68, 0);
+    }
+}
+
+@keyframes loading-slide {
+    0% { background-position: 0% 0; }
+    100% { background-position: -100% 0; }
+}
+
+@keyframes bgZoomShake {
+    0%, 100% {
+        transform: scale(1) translate(0, 0);
+    }
+    20% {
+        transform: scale(1.02) translate(-1px, 1px);
+    }
+    40% {
+        transform: scale(1.04) translate(1.4px, -1px);
+    }
+    60% {
+        transform: scale(1.03) translate(-1px, -1.4px);
+    }
+    80% {
+        transform: scale(1.01) translate(1px, 1.4px);
+    }
+}
+
+/* Organic floating keyframes (up/down, side drift, and micro-rotation) */
+@keyframes organicFloat {
+    0% {
+        transform: translateX(-50%) translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateX(-48%) translateY(-5px) rotate(0.4deg);
+    }
+    66% {
+        transform: translateX(-52%) translateY(-2px) rotate(-0.4deg);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0px) rotate(0deg);
+    }
+}
+
+
+/* ==========================================================================
+   12. RESPONSIVE MOBILE MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 36px;
+    }
+    .link-title {
+        font-size: 18px; 
+    }
+}

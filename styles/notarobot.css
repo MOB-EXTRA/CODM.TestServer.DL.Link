@@ -1,0 +1,207 @@
+/* ==========================================================
+   PAGE-WIDE LOCK (Cross-Device Text Selection & Callout Block)
+========================================================== */
+body.page-locked *:not(#verifySection, #verifySection *) {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+body.page-locked #linksContainer {
+    pointer-events: none !important;
+}
+
+
+/* ==========================================================
+   1. LINKS LOCKED / BLURRED STATE (Cross-Device Optimized)
+========================================================== */
+.links-locked {
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: filter;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: filter 0.3s ease;
+}
+
+.links-unlocked {
+    filter: blur(0);
+    -webkit-filter: blur(0);
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: filter;
+    pointer-events: auto;
+    user-select: auto;
+    -webkit-user-select: auto;
+}
+
+
+/* ==========================================================
+   2. VERIFICATION SECTION (In-Flow Layout)
+========================================================== */
+.verify-section {
+    margin: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.verify-box {
+    width: 100%;
+    max-width: 380px;
+    background: var(--surface-2);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius);
+    padding: 24px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(255, 210, 0, 0.18);
+}
+
+.verify-box h2 {
+    font-family: "Oswald", sans-serif;
+    color: var(--gold);
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.verify-text {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+/* ==========================================================
+   3. CODE VERIFICATION INPUT BOX
+========================================================== */
+#verifyCode {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--text);
+    font-size: 15px;
+    margin-bottom: 16px;
+    transition: 0.2s;
+}
+
+#verifyCode:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(255, 210, 0, 0.25);
+}
+
+/* ==========================================================
+   4. ANCHOR SOURCE LINK (Video Link)
+========================================================== */
+#videoSource {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--link);
+    font-style: italic;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#videoSource:hover {
+    color: var(--gold-hover);
+    text-decoration: underline;
+}
+
+/* ==========================================================
+   5. DISCLAIMER CHECKBOX SYSTEM
+========================================================== */
+.disclaimer-checkbox-container {
+    margin: 18px 0;
+    padding: 12px 14px;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-sm);
+    text-align: left;
+}
+
+.custom-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    cursor: pointer;
+    gap: 12px;
+    user-select: none;
+}
+
+.custom-checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-box {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    background-color: transparent;
+    display: inline-block;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    margin-top: 3px;
+}
+
+.checkbox-box::after {
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 5px;
+    height: 9px;
+    border: solid #0d0d0d;
+    border-width: 0 2.5px 2.5px 0;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    transition: transform 0.15s ease-in-out;
+}
+
+.custom-checkbox-label input[type="checkbox"]:checked + .checkbox-box {
+    background-color: var(--gold);
+    border-color: var(--gold);
+    box-shadow: 0 0 8px rgba(255, 210, 0, 0.4);
+}
+
+.custom-checkbox-label input[type="checkbox"]:checked + .checkbox-box::after {
+    transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+.custom-checkbox-label:hover .checkbox-box {
+    border-color: var(--gold-hover);
+}
+
+.checkbox-text {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.checkbox-text strong {
+    color: var(--gold);
+}
+
+/* ==========================================================
+   6. INTERACTIVE ACTIONS & BUTTON STATES
+========================================================== */
+#unlockButton {
+    width: 100%;
+}
+
+.btn-locked {
+    background: #2b2b2b !important;
+    color: #666 !important;
+    border: 1px solid #3d3d3d !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
