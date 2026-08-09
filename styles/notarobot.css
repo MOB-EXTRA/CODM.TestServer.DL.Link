@@ -18,8 +18,8 @@ body.page-locked #linksContainer {
    1. LINKS LOCKED / BLURRED STATE (Cross-Device Optimized)
 ========================================================== */
 .links-locked {
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
+    filter: blur(px);
+    -webkit-filter: blur(3px);
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
     will-change: filter;
