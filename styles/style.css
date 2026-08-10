@@ -1173,6 +1173,56 @@ button.btn-locked:hover {
     }
 }
 
+/* ==========================================================================
+   PROMOTION BOX STYLING
+   ========================================================================== */
+.promo-box {
+    margin: 24px;
+    background: linear-gradient(135deg, rgba(255, 184, 0, 0.08) 0%, var(--surface-2) 100%);
+    border: 1px solid rgba(255, 184, 0, 0.3);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.promo-box h3 {
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.promo-box p {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.promo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--bg-dark);
+    font-weight: 700;
+    font-size: 14px;
+    padding: 11px 20px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.promo-btn:hover {
+    background: var(--gold-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3);
+}
+
 
 /* ==========================================================================
    12. RESPONSIVE MOBILE MEDIA QUERIES
