@@ -63,7 +63,7 @@ OneSignalDeferred.push(async function(OneSignal) {
                 Open in System Browser
             </button>
             <button id="mob-later-btn" style="background: transparent; color: #aaa; border: 1px solid #666; padding: 8px; font-size: 12px; border-radius: 4px; cursor: pointer;">
-                Maybe later
+                Maybe later  /  Close
             </button>
             <button id="mob-dismiss-btn" style="background: transparent; color: #666; border: none; padding: 4px; font-size: 11px; text-decoration: underline; cursor: pointer; margin-top: 5px;">
                 No, thanks, I don't want to get notified
