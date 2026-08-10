@@ -627,6 +627,107 @@ h1 {
     line-height: 1.4;
 }
 
+/* ==========================================================================
+   INSTALLATION GUIDE MODULE
+   ========================================================================== */
+.install-guide-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--gold);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.install-guide-box h3 {
+    color: var(--gold);
+    font-family: "Oswald", sans-serif;
+    font-size: 18px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.install-subtitle {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    margin-bottom: 16px;
+}
+
+.install-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.install-column {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+}
+
+.install-column h4 {
+    color: var(--text);
+    font-family: "Oswald", sans-serif;
+    font-size: 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.install-column h4 i {
+    color: var(--gold);
+}
+
+.install-column ol {
+    margin-left: 18px;
+}
+
+.install-column li {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.install-column li:last-child {
+    margin-bottom: 0;
+}
+
+.install-column li strong,
+.install-footer-note strong {
+    color: var(--gold);
+}
+
+.install-footer-note {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+}
+
+.install-footer-note h4 {
+    color: var(--text);
+    font-family: "Oswald", sans-serif;
+    font-size: 15px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.install-footer-note h4 i {
+    color: var(--gold);
+}
+
+.install-footer-note p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 0;
+}
 
 /* ==========================================================================
    7. INTERACTIVE BUTTONS, LINKS HOUSING & VERIFICATION SYSTEM
