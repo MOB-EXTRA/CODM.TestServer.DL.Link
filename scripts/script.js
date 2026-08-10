@@ -606,16 +606,21 @@ window.addEventListener("load", () => {
             }
         });
     }
-
+    
     const shareBtn = document.getElementById("shareSiteBtn");
     if (shareBtn) {
         shareBtn.addEventListener("click", () => {
             let shareTitle = 'CODM Test Server Download Links | MOB EXTRA';
             let shareText = 'Get instant access to the latest official Call of Duty: Mobile Test Server download links!\n\n';
-
+    
             if (typeof testServerData !== "undefined") {
                 shareTitle = `CODM Test Server - ${testServerData.season} Hub | MOB EXTRA`;
-                shareText = `Get instant access to the latest ${testServerData.season} build (${testServerData.updateDescription})!\n\n`;
+                shareText = `📱 COD Mobile Public Test Server Download\n\n` +
+                            `🎮 ${testServerData.season}\n` +
+                            `📅 Release Date: ${testServerData.releaseDate}\n` +
+                            `📱 Platforms: Android (APK 32/64-Bit) & iOS (TestFlight)\n` +
+                            `📝 Update Info: ${testServerData.updateDescription}\n\n` +
+                            `Get download links here: `;
             }
 
             const shareData = {
@@ -623,7 +628,7 @@ window.addEventListener("load", () => {
                 text: shareText,
                 url: window.location.href
             };
-
+    
             if (navigator.share) {
                 navigator.share(shareData)
                     .catch((err) => console.log('Error sharing:', err));
