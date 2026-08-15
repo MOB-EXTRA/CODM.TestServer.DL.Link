@@ -46,44 +46,6 @@ document.addEventListener('copy', (e) => {
     }
 });
 
-function renderLinksHtml() {
-    if (typeof testServerData === "undefined" || !testServerData.links) return "";
-
-    return testServerData.links.map((link, index) => {
-        const linkStatus = (link.status !== undefined) ? link.status : testServerData.status;
-        let statusBadge = "";
-        
-        if (linkStatus === 1) {
-            statusBadge = `<span class="lu-status-badge">Live</span>`;
-        } else if (linkStatus === 0) {
-            statusBadge = `<span class="lu-status-badge offline">Closed</span>`;
-        } else {
-            statusBadge = `<span class="lu-status-badge unknown">Unknown</span>`;
-        }
-
-        return `
-            <div class="link-box">
-                <div class="link-title">
-                  <span>${link.device}</span>
-                  ${statusBadge}
-                </div>
-                <div class="link-row">
-                    <img src="assets/images/${link.icon}" alt="App Icon" class="link-app-icon">
-                    <div class="link" id="link${index}">${link.url}</div>
-                </div>
-                <div class="link-actions">
-                    <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="download-btn">
-                        <i class="fa-solid fa-download"></i> Download
-                    </a>
-                    <button onclick="copyLink('link${index}', this)">
-                         <i class="fa-regular fa-copy"></i> Copy Link
-                    </button>
-                </div>
-            </div>
-        `;
-    }).join('');
-}
-
 /**
  * Compares hardcoded DOM elements with testServerData.links 
  * and updates them if discrepancies are found, while injecting dynamic statuses.
@@ -101,9 +63,9 @@ function loadLinks() {
         // 1. Define Global Server Status Badge
         let statusBadge = "";
         if (testServerData.status === 1) {
-            statusBadge = `<span class="lu-status-badge">Live</span>`;
+            statusBadge = `<span class="lu-status-badge"><i class="fa-solid fa-wifi fa-beat-fade"></i> Live</span>`;
         } else if (testServerData.status === 0) {
-            statusBadge = `<span class="lu-status-badge offline">Closed</span>`;
+            statusBadge = `<span class="lu-status-badge offline"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Closed</span>`;
         } else {
             statusBadge = `<span class="lu-status-badge unknown">Unknown</span>`;
         }
@@ -153,9 +115,9 @@ function loadLinks() {
                     let badgeHtml = "";
                     
                     if (linkStatus === 1) {
-                        badgeHtml = `<span class="lu-status-badge">Live</span>`;
+                        badgeHtml = `<span class="lu-status-badge"><i class="fa-solid fa-wifi fa-beat-fade"></i> Live</span>`;
                     } else if (linkStatus === 0) {
-                        badgeHtml = `<span class="lu-status-badge offline">Closed</span>`;
+                        badgeHtml = `<span class="lu-status-badge offline"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Server Closed</span>`;
                     } else {
                         badgeHtml = `<span class="lu-status-badge unknown">Unknown</span>`;
                     }
