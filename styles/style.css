@@ -970,10 +970,9 @@ button.btn-locked:hover {
     animation: pulseGlowRed 1.5s infinite;
 }
 
-.server-closed i {
+.server-closed svg.fa-triangle-exclamation {
     font-size: 36px;
     color: var(--danger);
-    margin-bottom: 16px;
     text-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
 }
 
@@ -1020,7 +1019,7 @@ button.btn-locked:hover {
 }
 
 /* Gold bell alert icon tracking fixes */
-.server-reassurance-note i {
+.server-reassurance-note svg.fa-bell {
     color: var(--gold);
     font-size: 18px; /* Slightly larger so it looks like a clean section badge */
     margin-top: 0;
@@ -1044,7 +1043,7 @@ button.btn-locked:hover {
     justify-content: center;
     gap: 8px;
     padding: 8px 16px;
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 500;
     max-width: 90%;
     margin-top: 14px;
