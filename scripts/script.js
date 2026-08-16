@@ -94,7 +94,7 @@ document.addEventListener('copy', (e) => {
 
 /**
  * Compares hardcoded DOM elements with testServerData.links 
- * and updates them if discrepancies are found, while injecting dynamic statuses.
+ * and updates them if discrepancies are found, while injecting dynamic statuses and icons.
  */
 function loadLinks() {
     const lastUpdated = document.getElementById("lastUpdated");
@@ -141,15 +141,28 @@ function loadLinks() {
             const urlEl = document.getElementById(`url-${index}`);
             const anchorEl = document.getElementById(`anchor-${index}`);
             
-            if (deviceEl && iconEl && urlEl && anchorEl) {
+            if (deviceEl && urlEl && anchorEl) {
                 const currentUrl = urlEl.innerText.trim();
                 const expectedUrl = link.url.trim();
                 
-                if (currentUrl !== expectedUrl || !iconEl.src.includes(link.icon)) {
+                // Dynamically determine icons and assets based on the clean device string
+                let faIcon = '<i class="fa-brands fa-android"></i>';
+                let imgFile = 'codm-ts-logo-A64.png';
+                
+                if (link.device.toLowerCase().includes('ios')) {
+                    faIcon = '<i class="fa-brands fa-apple"></i>';
+                    imgFile = 'codm-ts-logo-ios.png';
+                } else if (link.device.includes('32-bit')) {
+                    imgFile = 'codm-ts-logo-A32.png';
+                } else if (link.device.includes('64-bit')) {
+                    imgFile = 'codm-ts-logo-A64.png';
+                }
+
+                if (currentUrl !== expectedUrl || (iconEl && !iconEl.src.includes(imgFile))) {
                     urlEl.innerText = link.url;
                     anchorEl.href = link.url;
-                    iconEl.src = `assets/images/${link.icon}`;
-                    deviceEl.innerHTML = link.device;
+                    if (iconEl) iconEl.src = `assets/images/${imgFile}`;
+                    deviceEl.innerHTML = `${faIcon} ${link.device}`;
                 }
                 
                 const linkBox = deviceEl.closest('.link-box');
