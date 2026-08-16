@@ -393,6 +393,29 @@ h1 {
 /* ==========================================================================
    5. LAST UPDATED STATUS LOADER & BUILD INFO BADGES
    ========================================================================== */
+
+/* Repo Source Status Box */
+.repo-source-box {
+    margin: 10px 24px 0 24px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.repo-source-box span {
+    color: var(--gold);
+    font-weight: 500;
+}
+
+.repo-source-box a {
+    color: var(--link);
+    text-decoration: underline;
+}
+
 .last-updated {
     margin: 10px 24px; /* Reduced vertical gap */
     padding: 8px 12px; /* Slimmer */

@@ -3,7 +3,6 @@ let featuredPlayers = [];
 
 // 1. SINGLE Global entry point for the YouTube Iframe API
 window.onYouTubeIframeAPIReady = function() {
-    // Only initialize featured videos now
     initFeaturedPlayers();
 };
 
@@ -14,6 +13,53 @@ window.onYouTubeIframeAPIReady = function() {
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 })();
+
+/**
+ * Sequential Fallback Data Loader for Shared Config (GitHub Pages)
+ */
+function loadSharedConfigWithFallback() {
+    const repoConfigs = [
+        { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.1/codm-test-server/codm-config.js", name: "Repository 1" },
+        { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.2/codm-test-server/codm-config.js", name: "Repository 2" },
+        { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.3/codm-test-server/codm-config.js", name: "Repository 3" }
+    ];
+
+    let currentIndex = 0;
+    const repoSourceLabel = document.getElementById("currentRepoLabel");
+
+    function attemptLoad() {
+        if (currentIndex >= repoConfigs.length) {
+            console.error("Critical Error: All repositories failed.");
+            if (repoSourceLabel) {
+                repoSourceLabel.innerHTML = `<span style="color: var(--danger);">All sources failed! Please <a href="https://www.youtube.com/channel/UCbDtYZS08VvB6luAcyn08bQ" target="_blank" rel="noopener noreferrer" style="color: var(--gold); text-decoration: underline;">contact the site admin via YouTube</a>.</span>`;
+            }
+            waitForData(); // Proceed to handle the failure state visually
+            return;
+        }
+
+        const currentRepo = repoConfigs[currentIndex];
+        const script = document.createElement('script');
+        script.src = currentRepo.url;
+
+        script.onload = function() {
+            console.log(`Config successfully loaded from ${currentRepo.name}`);
+            if (repoSourceLabel) {
+                repoSourceLabel.textContent = currentRepo.name;
+            }
+            waitForData();
+        };
+
+        script.onerror = function() {
+            console.warn(`Repository #${currentIndex + 1} failed. Switching to next repository...`);
+            currentIndex++;
+            attemptLoad(); // Automatically falls back to the next repository
+        };
+
+        document.head.appendChild(script);
+    }
+
+    attemptLoad();
+}
 
 /**
  * Helper function to generate the HTML string for all download links.
@@ -88,7 +134,7 @@ function loadLinks() {
             `;
         }
 
-        // 4. Compare hardcoded HTML elements with links.js and update if data differs
+        // 4. Compare hardcoded HTML elements with links and update if data differs
         testServerData.links.forEach((link, index) => {
             const deviceEl = document.getElementById(`device-${index}`);
             const iconEl = document.getElementById(`icon-${index}`);
@@ -99,7 +145,6 @@ function loadLinks() {
                 const currentUrl = urlEl.innerText.trim();
                 const expectedUrl = link.url.trim();
                 
-                // Compare and update if links.js contains newer/different data
                 if (currentUrl !== expectedUrl || !iconEl.src.includes(link.icon)) {
                     urlEl.innerText = link.url;
                     anchorEl.href = link.url;
@@ -107,7 +152,6 @@ function loadLinks() {
                     deviceEl.innerHTML = link.device;
                 }
                 
-                // Dynamically update individual link status badges inside the card title
                 const linkBox = deviceEl.closest('.link-box');
                 if (linkBox) {
                     const titleEl = linkBox.querySelector('.link-title');
@@ -132,7 +176,7 @@ function loadLinks() {
             }
         });
 
-        // 5. Control Notification Section (Section 3) and Verification based on status
+        // 5. Control Notification Section and Verification based on status
         if (testServerData.status === 1) {
             if (serverClosedSection) serverClosedSection.style.display = "none";
             
@@ -171,7 +215,6 @@ function forceShowLinks() {
         verifySection.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 }
-
 
 function copyLink(id, button) {
     const text = document.getElementById(id).innerText.trim();
@@ -257,16 +300,14 @@ function showVerification() {
     if (videoSource) videoSource.href = notARobot.codeSource;
     if (verifySection) verifySection.style.display = "flex";
     
-    // Apply blur and locking to links container
     const linksContainer = document.getElementById("linksContainer");
     if (linksContainer) {
         linksContainer.classList.add("links-locked");
         linksContainer.classList.remove("links-unlocked");
     }
     
-    setSelectionLock(true); // Lock text selection and highlighting across devices
+    setSelectionLock(true);
     
-    // Reset checkbox state upon display panel invocation
     const checkbox = document.getElementById("disclaimerCheckbox");
     if (checkbox) checkbox.checked = false;
     
@@ -308,7 +349,6 @@ function unlockLinks() {
         return;
     }
 
-    // Hide verification section and unblur links container
     const verifySection = document.getElementById("verifySection");
     if (verifySection) verifySection.style.display = "none";
 
@@ -316,19 +356,12 @@ function unlockLinks() {
     if (linksContainer) {
         linksContainer.classList.remove("links-locked");
         linksContainer.classList.add("links-unlocked");
-        
-        // Auto-scroll to the links section smoothly upon successful verification
         linksContainer.scrollIntoView({ behavior: "smooth", block: "center" });
     }
 
-    setSelectionLock(false); // Re-enable normal text selection and copying once verified
+    setSelectionLock(false);
 }
 
-
-/**
- * Manages the state of all progress loaders on the page.
- * @param {string} state - 'start' or 'finish'
- */
 function setLoaderState(state) {
     const loaders = document.querySelectorAll(".progress-loader");
     const loadingBox = document.querySelector(".hero-banner-wrapper .loading-box");
@@ -336,7 +369,7 @@ function setLoaderState(state) {
     
     if (state === 'start') {
         loaders.forEach(loader => loader.classList.add("active"));
-        if (loadingBox) loadingBox.classList.remove("hidden"); // Show loading box
+        if (loadingBox) loadingBox.classList.remove("hidden");
         if (badgeContainer) badgeContainer.classList.remove('visible');
     } else if (state === 'finish') {
         loaders.forEach(loader => {
@@ -344,7 +377,6 @@ function setLoaderState(state) {
             loader.classList.add("finished");
         });
         
-        // Hide the loading box completely once data is loaded
         if (loadingBox) loadingBox.classList.add("hidden");
         
         setTimeout(() => {
@@ -353,12 +385,6 @@ function setLoaderState(state) {
     }
 }
 
-/**
- * Animates text updates over a set duration.
- * @param {string} elementId - The ID of the span to update.
- * @param {Array} messages - The array of strings to cycle through.
- * @param {number} duration - Total time in ms.
- */
 function animateTextSequence(elementId, messages, duration) {
     const element = document.getElementById(elementId);
     if (!element) return null;
@@ -381,38 +407,33 @@ function animateTextSequence(elementId, messages, duration) {
 }
 
 function waitForData() {
-    const FAKE_DELAY = 5000; // adjustable delay
+    const FAKE_DELAY = 5000;
     
     const statusMessages = [
-        "Initializing deployment node...",
-        "Establishing secure connection...",
-        "Authenticating server manifest...",
-        "Syncing configuration protocols...",
-        "Checking test server status..."
+        "Connecting to repository network...",
+        "Checking primary & backup nodes...",
+        "Syncing shared configuration manifest...",
+        "Finalizing live server status..."
     ];
     
     const linkMessages = [
-        `<i class="fa-solid fa-cloud-arrow-down"></i> Fetching latest build info...`,
-        `<i class="fa-solid fa-server"></i> Getting version information...`,
-        `<i class="fa-solid fa-magnifying-glass"></i> Syncing iOS TestFlight registry...`,
-        `<i class="fa-regular fa-circle-check"></i> iOS registry validated.`,
-        `<i class="fa-solid fa-magnifying-glass"></i> Syncing Android (32-bit) assets...`,
-        `<i class="fa-regular fa-circle-check"></i> Android (32-bit) assets cached.`,
-        `<i class="fa-solid fa-magnifying-glass"></i> Syncing Android (64-bit) assets...`,
-        `<i class="fa-regular fa-circle-check"></i> Android (64-bit) assets cached.`,
-        `<i class="fa-solid fa-shield-halved"></i> Checking test server status...`,
+        `<i class="fa-solid fa-network-wired"></i> Accessing repository network...`,
+        `<i class="fa-solid fa-cloud-arrow-down"></i> Fetching configuration data...`,
+        `<i class="fa-solid fa-server"></i> Synchronizing build versions...`,
+        `<i class="fa-regular fa-circle-check"></i> Manifest payload validated.`,
+        `<i class="fa-solid fa-magnifying-glass"></i> Processing download packages...`,
+        `<i class="fa-regular fa-circle-check"></i> Android & iOS links cached.`,
+        `<i class="fa-solid fa-shield-halved"></i> Setting up verification guard...`,
         `<i class="fa-solid fa-code"></i> Finalizing deployment interface...`
     ];
     
     setLoaderState('start');
 
-    // Start both animations
     const statusTimer = animateTextSequence('statusMsg', statusMessages, FAKE_DELAY);
     const linksTimer = animateTextSequence('loadingText', linkMessages, FAKE_DELAY);
 
     const startTime = Date.now();
 
-    // Check for data loop
     const checkData = setInterval(() => {
         if (typeof testServerData !== "undefined" && typeof notARobot !== "undefined") {
             clearInterval(checkData);
@@ -421,7 +442,6 @@ function waitForData() {
             const remaining = Math.max(0, FAKE_DELAY - elapsed);
 
             setTimeout(() => {
-                // Clear both timers
                 clearInterval(statusTimer);
                 clearInterval(linksTimer);
                 setLoaderState('finish');
@@ -430,7 +450,6 @@ function waitForData() {
         }
     }, 100);
 
-    // Safety Fallback
     setTimeout(() => {
         setLoaderState('finish');
         clearInterval(checkData);
@@ -444,7 +463,7 @@ function loadFeaturedVideos() {
     const section = document.getElementById("featuredVideosSection");
 
     if (typeof featuredVideos === "undefined" || featuredVideos.length === 0) {
-        section.innerHTML = "";
+        if(section) section.innerHTML = "";
         return;
     }
 
@@ -528,8 +547,9 @@ function initFeaturedPlayers() {
     });
 }
 
-window.addEventListener("load", () => {
-    waitForData();
+// Automatically trigger data fallback loading when DOM loads
+window.addEventListener("DOMContentLoaded", () => {
+    loadSharedConfigWithFallback();
     loadFeaturedVideos();
     loadChannels();
 
@@ -577,11 +597,11 @@ window.addEventListener("load", () => {
     
             if (typeof testServerData !== "undefined") {
                 shareTitle = `CODM Test Server - ${testServerData.season} Hub | MOB EXTRA`;
-                shareText = `📱 COD Mobile Public Test Server Download\n\n` +
-                            `🎮 ${testServerData.season}\n` +
-                            `📅 Release Date: ${testServerData.releaseDate}\n` +
-                            `📱 Platforms: Android (APK 32/64-Bit) & iOS (TestFlight)\n` +
-                            `📝 Update Info: ${testServerData.updateDescription}\n\n` +
+                shareText = `COD Mobile Public Test Server Download\n\n` +
+                            `Season: ${testServerData.season}\n` +
+                            `Release Date: ${testServerData.releaseDate}\n` +
+                            `Platforms: Android (APK 32/64-Bit) & iOS (TestFlight)\n` +
+                            `Update Info: ${testServerData.updateDescription}\n\n` +
                             `Get download links here: `;
             }
 
