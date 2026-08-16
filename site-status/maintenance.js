@@ -14,8 +14,50 @@
         "fa-solid fa-laptop-code"
     ];
 
-    // Wait for the DOM to fully load
-    window.addEventListener("DOMContentLoaded", () => {
+    /**
+     * Sequential Fallback Data Loader for Maintenance Config (GitHub Pages)
+     */
+    function loadMaintenanceConfigWithFallback() {
+        const repoConfigs = [
+            { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.1/codm-test-server/codm-config.js", name: "Repository 1" },
+            { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.2/codm-test-server/codm-config.js", name: "Repository 2" },
+            { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.3/codm-test-server/codm-config.js", name: "Repository 3" }
+        ];
+
+        let currentIndex = 0;
+
+        function attemptLoad() {
+            if (currentIndex >= repoConfigs.length) {
+                console.warn("All remote maintenance repositories failed. Using local/default configuration fallback.");
+                initMaintenanceSystem();
+                return;
+            }
+
+            const currentRepo = repoConfigs[currentIndex];
+            const script = document.createElement('script');
+            script.src = currentRepo.url;
+
+            script.onload = function() {
+                console.log(`Maintenance configuration successfully loaded from ${currentRepo.name}`);
+                initMaintenanceSystem();
+            };
+
+            script.onerror = function() {
+                console.warn(`Maintenance Repository #${currentIndex + 1} failed. Switching to next repository...`);
+                currentIndex++;
+                attemptLoad();
+            };
+
+            document.head.appendChild(script);
+        }
+
+        attemptLoad();
+    }
+
+    /**
+     * Core Maintenance System Initialization and UI Rendering
+     */
+    function initMaintenanceSystem() {
         // Fallback checks in case the maintenance config file fails to load entirely
         const config = typeof maintenanceConfig !== "undefined" ? maintenanceConfig : {
             isUnderMaintenance: 1, 
@@ -266,5 +308,10 @@
                 }, 300);
             });
         }
+    }
+
+    // Automatically trigger repository fallback loading when DOM loads
+    window.addEventListener("DOMContentLoaded", () => {
+        loadMaintenanceConfigWithFallback();
     });
 })();
