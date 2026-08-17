@@ -1,4 +1,10 @@
-// Global tracking variable for featured video players
+/**
+ * ==========================================
+ * CENTRALIZED DATA LOADER & PTB HUB CONTROLLER
+ * ==========================================
+ */
+
+// Global tracking variables
 let featuredPlayers = []; 
 
 // 1. SINGLE Global entry point for the YouTube Iframe API
@@ -16,8 +22,9 @@ window.onYouTubeIframeAPIReady = function() {
 
 /**
  * Sequential Fallback Data Loader for Shared Config (GitHub Pages)
+ * Uses fetch() and function-scoped evaluation to prevent 'const' redeclaration errors.
  */
-function loadSharedConfigWithFallback() {
+async function loadSharedConfigWithFallback() {
     const repoConfigs = [
         { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.1/codm-test-server/codm-config.js", name: "Repository 1" },
         { url: "https://mob-extra.github.io/MOBEXTRA.github.shared-data-repo.2/codm-test-server/codm-config.js", name: "Repository 2" },
@@ -27,7 +34,7 @@ function loadSharedConfigWithFallback() {
     let currentIndex = 0;
     const repoSourceLabel = document.getElementById("currentRepoLabel");
 
-    function attemptLoad() {
+    async function attemptLoad() {
         if (currentIndex >= repoConfigs.length) {
             console.error("Critical Error: All repositories failed.");
             if (repoSourceLabel) {
@@ -38,32 +45,50 @@ function loadSharedConfigWithFallback() {
         }
 
         const currentRepo = repoConfigs[currentIndex];
-        const script = document.createElement('script');
-        script.src = currentRepo.url;
 
-        script.onload = function() {
-            console.log(`Config successfully loaded from ${currentRepo.name}`);
-            if (repoSourceLabel) {
-                repoSourceLabel.textContent = currentRepo.name;
+        try {
+            const response = await fetch(currentRepo.url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-            waitForData();
-        };
 
-        script.onerror = function() {
-            console.warn(`Repository #${currentIndex + 1} failed. Switching to next repository...`);
+            const scriptText = await response.text();
+
+            // Safely evaluate the config script in a isolated scope and assign to window
+            // This prevents "Identifier has already been declared" errors during retries/fallbacks
+            const evaluateConfig = new Function(`
+                ${scriptText}
+                if (typeof testServerData !== 'undefined') window.testServerData = testServerData;
+                if (typeof notARobot !== 'undefined') window.notARobot = notARobot;
+            `);
+            
+            evaluateConfig();
+
+            if (typeof window.testServerData !== "undefined") {
+                console.log(`Config successfully loaded from ${currentRepo.name}`);
+                if (repoSourceLabel) {
+                    repoSourceLabel.innerHTML = `
+                        <span>${currentRepo.name}</span>
+                        <span class="sync-badge">Synchronized</span>
+                    `;
+                }
+                waitForData();
+            } else {
+                throw new Error("Configuration loaded but data objects were not found.");
+            }
+
+        } catch (error) {
+            console.warn(`Repository #${currentIndex + 1} (${currentRepo.name}) failed. Switching to next repository...`, error);
             currentIndex++;
             attemptLoad(); // Automatically falls back to the next repository
-        };
-
-        document.head.appendChild(script);
+        }
     }
 
     attemptLoad();
 }
 
 /**
- * Helper function to generate the HTML string for all download links.
- * Prevents code duplication between active and forced states.
+ * Helper function to manage selection locking.
  */
 function setSelectionLock(lock) {
     if (lock) {
@@ -73,7 +98,7 @@ function setSelectionLock(lock) {
     }
 }
 
-// Prevent context menus and text selection globally outside the verification box when locked
+// Prevent context menus and text selection globally when locked
 document.addEventListener('contextmenu', (e) => {
     if (document.body.classList.contains('page-locked') && !e.target.closest('#verifySection')) {
         e.preventDefault();
@@ -93,49 +118,46 @@ document.addEventListener('copy', (e) => {
 });
 
 /**
- * Compares hardcoded DOM elements with testServerData.links 
- * and updates them if discrepancies are found, while injecting dynamic statuses and icons.
+ * Compares DOM elements with window.testServerData and updates them dynamically.
  */
 function loadLinks() {
     const lastUpdated = document.getElementById("lastUpdated");
     const badgeContainer = document.getElementById("buildBadgeContainer");
     const serverClosedSection = document.getElementById("serverClosedSection");
 
+    const data = window.testServerData;
+
     try {
-        if (typeof testServerData === "undefined") {
+        if (typeof data === "undefined") {
             throw new Error("Data not loaded");
         }
 
-        // 1. Define Global Server Status Badge
         let statusBadge = "";
-        if (testServerData.status === 1) {
+        if (data.status === 1) {
             statusBadge = `<span class="lu-status-badge"><i class="fa-solid fa-wifi fa-beat-fade"></i> Live</span>`;
-        } else if (testServerData.status === 0) {
+        } else if (data.status === 0) {
             statusBadge = `<span class="lu-status-badge offline"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Closed</span>`;
         } else {
             statusBadge = `<span class="lu-status-badge unknown">Unknown</span>`;
         }
         
-        // 2. Inject Last Updated metadata date and Status Badge
         lastUpdated.innerHTML = `
-            ${statusBadge} Last Updated: <strong>${testServerData.lastUpdated}</strong>
+            ${statusBadge} Last Updated: <strong>${data.lastUpdated}</strong>
         `;
 
-        // 3. Inject Dynamic Season/Build Info
         if (badgeContainer) {
             badgeContainer.innerHTML = `
                 <div class="build-info-wrapper">
                     <div class="build-meta-row">
-                        <span class="badge-season">${testServerData.season}</span>
-                        <span class="badge-date"><i class="fa-regular fa-calendar"></i> ${testServerData.releaseDate}</span>
+                        <span class="badge-season">${data.season}</span>
+                        <span class="badge-date"><i class="fa-regular fa-calendar"></i> ${data.releaseDate}</span>
                     </div>
-                    <p class="build-desc">${testServerData.updateDescription}</p>
+                    <p class="build-desc">${data.updateDescription}</p>
                 </div>
             `;
         }
 
-        // 4. Compare hardcoded HTML elements with links and update if data differs
-        testServerData.links.forEach((link, index) => {
+        data.links.forEach((link, index) => {
             const deviceEl = document.getElementById(`device-${index}`);
             const iconEl = document.getElementById(`icon-${index}`);
             const urlEl = document.getElementById(`url-${index}`);
@@ -145,7 +167,6 @@ function loadLinks() {
                 const currentUrl = urlEl.innerText.trim();
                 const expectedUrl = link.url.trim();
                 
-                // Dynamically determine icons and assets based on the clean device string
                 let faIcon = '<i class="fa-brands fa-android"></i>';
                 let imgFile = 'codm-ts-logo-A64.png';
                 
@@ -168,7 +189,7 @@ function loadLinks() {
                 const linkBox = deviceEl.closest('.link-box');
                 if (linkBox) {
                     const titleEl = linkBox.querySelector('.link-title');
-                    const linkStatus = (link.status !== undefined) ? link.status : testServerData.status;
+                    const linkStatus = (link.status !== undefined) ? link.status : data.status;
                     let badgeHtml = "";
                     
                     if (linkStatus === 1) {
@@ -189,15 +210,10 @@ function loadLinks() {
             }
         });
 
-        // 5. Control Notification Section and Verification based on status
-        if (testServerData.status === 1) {
+        if (data.status === 1) {
             if (serverClosedSection) serverClosedSection.style.display = "none";
-            
             injectVerificationSection();
-            
-            setTimeout(() => {
-                showVerification(); 
-            }, 1000);
+            setTimeout(() => { showVerification(); }, 1000);
         } else {
             if (serverClosedSection) serverClosedSection.style.display = "block";
             const linksContainer = document.getElementById("linksContainer");
@@ -214,7 +230,8 @@ function loadLinks() {
 
 function forceShowLinks() {
     const serverClosedSection = document.getElementById("serverClosedSection");
-    if (typeof testServerData === "undefined" || !testServerData.links) return;
+    const data = window.testServerData;
+    if (typeof data === "undefined" || !data.links) return;
 
     if (serverClosedSection) {
         serverClosedSection.style.display = "none";
@@ -232,19 +249,13 @@ function forceShowLinks() {
 function copyLink(id, button) {
     const text = document.getElementById(id).innerText.trim();
 
-    navigator.clipboard
-        .writeText(text)
+    navigator.clipboard.writeText(text)
         .then(() => {
             const original = button.innerHTML;
             button.innerHTML = `<i class="fa-solid fa-copy"></i> Copied!`;
-            
-            setTimeout(() => {
-                button.innerHTML = original;
-            }, 1500);
+            setTimeout(() => { button.innerHTML = original; }, 1500);
         })
-        .catch(() => {
-            alert("Unable to copy the link.");
-        });
+        .catch(() => { alert("Unable to copy the link."); });
 }
 
 function injectVerificationSection() {
@@ -285,32 +296,26 @@ function injectVerificationSection() {
     }
 
     const unlockBtn = document.getElementById("unlockButton");
-    if (unlockBtn) {
-        unlockBtn.addEventListener("click", unlockLinks);
-    }
+    if (unlockBtn) unlockBtn.addEventListener("click", unlockLinks);
     
     const verifyCodeInput = document.getElementById("verifyCode");
     if (verifyCodeInput) {
         verifyCodeInput.addEventListener("keydown", function(e) {
-            if (e.key === "Enter") {
-                unlockLinks();
-            }
+            if (e.key === "Enter") unlockLinks();
         });
     }
 
     const disclaimerBox = document.getElementById("disclaimerCheckbox");
-    if (disclaimerBox) {
-        disclaimerBox.addEventListener("change", updateButtonStatus);
-    }
+    if (disclaimerBox) disclaimerBox.addEventListener("change", updateButtonStatus);
 }
 
 function showVerification() {
-    if (typeof notARobot === "undefined") return;
+    if (typeof window.notARobot === "undefined") return;
 
     const videoSource = document.getElementById("videoSource");
     const verifySection = document.getElementById("verifySection");
 
-    if (videoSource) videoSource.href = notARobot.codeSource;
+    if (videoSource) videoSource.href = window.notARobot.codeSource;
     if (verifySection) verifySection.style.display = "flex";
     
     const linksContainer = document.getElementById("linksContainer");
@@ -345,19 +350,20 @@ function updateButtonStatus() {
 
 function unlockLinks() {
     const checkbox = document.getElementById("disclaimerCheckbox");
-    const code = document.getElementById("verifyCode").value.trim();
+    const codeInput = document.getElementById("verifyCode");
+    const notARobotData = window.notARobot;
 
     if (checkbox && !checkbox.checked) {
         alert("You must acknowledge and accept the disclaimer to access the downloads.");
         return;
     }
 
-    if (code === "") {
+    if (!codeInput || codeInput.value.trim() === "") {
         alert("Please enter the verification code.");
         return;
     }
 
-    if (code !== notARobot.code) {
+    if (codeInput.value.trim() !== notARobotData.code) {
         alert("Incorrect verification code.");
         return;
     }
@@ -389,9 +395,7 @@ function setLoaderState(state) {
             loader.classList.remove("active");
             loader.classList.add("finished");
         });
-        
         if (loadingBox) loadingBox.classList.add("hidden");
-        
         setTimeout(() => {
             if (badgeContainer) badgeContainer.classList.add('visible');
         }, 50); 
@@ -404,7 +408,6 @@ function animateTextSequence(elementId, messages, duration) {
 
     const intervalTime = duration / messages.length;
     let index = 0;
-    
     element.innerHTML = messages[0];
 
     const timer = setInterval(() => {
@@ -448,7 +451,7 @@ function waitForData() {
     const startTime = Date.now();
 
     const checkData = setInterval(() => {
-        if (typeof testServerData !== "undefined" && typeof notARobot !== "undefined") {
+        if (typeof window.testServerData !== "undefined" && typeof window.notARobot !== "undefined") {
             clearInterval(checkData);
 
             const elapsed = Date.now() - startTime;
@@ -521,9 +524,7 @@ function loadChannels() {
 }
 
 function initFeaturedPlayers() {
-    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') {
-        return; 
-    }
+    if (typeof YT === 'undefined' || typeof YT.Player === 'undefined') return; 
     if (typeof featuredVideos === "undefined") return;
     if (featuredPlayers.length > 0) return;
 
@@ -560,7 +561,7 @@ function initFeaturedPlayers() {
     });
 }
 
-// Automatically trigger data fallback loading when DOM loads
+// Automatically trigger data fallback loading and UI components when DOM loads
 window.addEventListener("DOMContentLoaded", () => {
     loadSharedConfigWithFallback();
     loadFeaturedVideos();
@@ -608,13 +609,14 @@ window.addEventListener("DOMContentLoaded", () => {
             let shareTitle = 'CODM Test Server Download Links | MOB EXTRA';
             let shareText = 'Get instant access to the latest official Call of Duty: Mobile Test Server download links!\n\n';
     
-            if (typeof testServerData !== "undefined") {
-                shareTitle = `CODM Test Server - ${testServerData.season} Hub | MOB EXTRA`;
-                shareText = `COD Mobile Public Test Server Download\n\n` +
-                            `Season: ${testServerData.season}\n` +
-                            `Release Date: ${testServerData.releaseDate}\n` +
+            const data = window.testServerData;
+            if (typeof data !== "undefined") {
+                shareTitle = `CODM Test Server - ${data.season} Hub | MOB EXTRA`;
+                shareText = `COD Mobile Public Test Build Download\n\n` +
+                            `Season: ${data.season}\n` +
+                            `Release Date: ${data.releaseDate}\n` +
                             `Platforms: Android (APK 32/64-Bit) & iOS (TestFlight)\n` +
-                            `Update Info: ${testServerData.updateDescription}\n\n` +
+                            `Update Info: ${data.updateDescription}\n\n` +
                             `Get download links here: `;
             }
 
