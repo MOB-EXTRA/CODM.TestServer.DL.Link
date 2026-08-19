@@ -168,15 +168,15 @@ function loadLinks() {
                 const expectedUrl = link.url.trim();
                 
                 let faIcon = '<i class="fa-brands fa-android"></i>';
-                let imgFile = 'codm-ts-logo-A64.png';
+                let imgFile = 'codm-ts-logo-A.png';
                 
                 if (link.device.toLowerCase().includes('ios')) {
                     faIcon = '<i class="fa-brands fa-apple"></i>';
                     imgFile = 'codm-ts-logo-ios.png';
                 } else if (link.device.includes('32-bit')) {
-                    imgFile = 'codm-ts-logo-A32.png';
+                    imgFile = 'codm-ts-logo-A.png';
                 } else if (link.device.includes('64-bit')) {
-                    imgFile = 'codm-ts-logo-A64.png';
+                    imgFile = 'codm-ts-logo-A.png';
                 }
 
                 if (currentUrl !== expectedUrl || (iconEl && !iconEl.src.includes(imgFile))) {
