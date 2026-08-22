@@ -1,6 +1,11 @@
 const featuredVideos = [
 
     {
+        title: "How to Install CODM Test Server",
+        url: "https://youtu.be/oRoUVGgtEpQ"
+    },
+
+    {
         title: "New CODM Redeem Codes",
         url: "https://youtu.be/WNBhmy8OYu8?si=x0NzXD0km_4T53FE"
     },
