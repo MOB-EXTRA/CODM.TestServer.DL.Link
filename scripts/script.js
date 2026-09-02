@@ -193,9 +193,9 @@ function loadLinks() {
                     let badgeHtml = "";
                     
                     if (linkStatus === 1) {
-                        badgeHtml = `<span class="lu-status-badge"><i class="fa-solid fa-wifi fa-beat-fade"></i> Live</span>`;
+                        badgeHtml = `<span class="lu-status-badge"><i class="fa-solid fa-wifi fa-beat-fade"></i> TEST SERVER LIVE</span>`;
                     } else if (linkStatus === 0) {
-                        badgeHtml = `<span class="lu-status-badge offline"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> Server Closed</span>`;
+                        badgeHtml = `<span class="lu-status-badge offline"><i class="fa-solid fa-triangle-exclamation fa-beat-fade"></i> TEST SERVER CLOSED</span>`;
                     } else {
                         badgeHtml = `<span class="lu-status-badge unknown">Unknown</span>`;
                     }
