@@ -485,7 +485,7 @@ function loadFeaturedVideos() {
 
     let html = `
         <div class="featured-videos">
-            <h2 class="section-title">Featured Content</h2>
+            <h2 class="section-title">Some Featured Content</h2>
     `;
 
     featuredVideos.forEach((video, index) => {
