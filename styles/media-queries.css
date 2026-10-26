@@ -1,0 +1,193 @@
+/* ==========================================================================
+   RESPONSIVE & PREMIUM MULTI-DEVICE STYLING (responsive.css)
+   ========================================================================== */
+
+/* 1. TABLET SCREENS (768px and up) */
+@media (min-width: 768px) {
+    body {
+        padding: 40px 20px;
+        align-items: center;
+        background: radial-gradient(circle at center, #121212 0%, #030303 100%);
+    }
+
+    .mobile-container {
+        max-width: 720px;
+    }
+
+    .header {
+        padding: 20px 32px 10px;
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .share-area {
+        gap: 16px;
+    }
+
+    .btn-share,
+    .btn-community {
+        flex: 0 0 160px;
+        padding: 13px 18px;
+        font-size: 14.5px;
+    }
+
+    /* Content & Feature Boxes Spacing */
+    .info-box,
+    .intro-box,
+    .promo-box,
+    .disclaimer,
+    .server-closed {
+        margin-left: 32px;
+        margin-right: 32px;
+        padding: 24px;
+    }
+
+    /* Links Grid for Tablets (2 Columns) */
+    #linksContainer {
+        padding: 0 32px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+
+    #linksContainer .link-box {
+        margin-bottom: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    #linksContainer .link-box:first-child {
+        grid-column: span 2;
+    }
+
+    .install-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .site-footer {
+        margin: 32px;
+    }
+}
+
+/* 2. DESKTOP SCREENS (1024px and up) */
+@media (min-width: 1024px) {
+    body {
+        padding: 50px 20px;
+    }
+
+    .mobile-container {
+        max-width: 1000px;
+    }
+
+    .card {
+        border-radius: 24px;
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85), 0 0 50px rgba(255, 184, 0, 0.08);
+    }
+    
+    .header {
+        padding: 24px 40px 12px;
+    }
+
+    h1 {
+        font-size: 54px;
+    }
+
+    .subtitle {
+        font-size: 17px;
+    }
+
+    /* Links Container: 3 Columns on Desktop for the 3 download links! */
+    #linksContainer {
+        padding: 0 40px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    #linksContainer .link-box:first-child {
+        grid-column: span 1; /* Resets span so iOS, 32-bit, and 64-bit sit side by side */
+    }
+
+    .link-box {
+        padding: 20px;
+    }
+
+    .link-title {
+        font-size: 20px;
+    }
+
+    .link {
+        font-size: 14px;
+    }
+
+    /* Content Boxes */
+    .info-box,
+    .intro-box,
+    .promo-box,
+    .disclaimer,
+    .server-closed {
+        margin-left: 40px;
+        margin-right: 40px;
+        padding: 28px;
+    }
+
+    .install-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .site-footer {
+        margin: 40px;
+        padding-top: 24px;
+    }
+}
+
+/* 3. WIDE DESKTOP SCREENS (1280px and up) */
+@media (min-width: 1280px) {
+    .mobile-container {
+        max-width: 1100px;
+    }
+}
+
+/* 4. COMPACT MOBILE POLISH (480px and down) */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    .mobile-container {
+        max-width: 100%;
+    }
+    
+    h1 {
+        font-size: 32px;
+    }
+
+    .header {
+        padding: 10px 16px 4px;
+    }
+
+    #linksContainer,
+    .info-box,
+    .intro-box,
+    .promo-box,
+    .disclaimer,
+    .server-closed,
+    .site-footer {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+
+    #linksContainer {
+        padding: 0;
+    }
+}
