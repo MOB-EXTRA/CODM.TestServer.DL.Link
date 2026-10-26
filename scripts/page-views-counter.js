@@ -73,17 +73,19 @@
     return document.querySelectorAll("#page-views-count, .config-page-views-count");
   }
 
-  // 3. Increment & Fetch Global Count
+  // 3. Increment & Fetch Global Count with correct V2 property path
   function fetchAndRenderViews(targets) {
     fetch(
-      "https://api.counterapi.dev/v2/mob-extra-sites/vile-tempest-site-views/up",
+      "https://api.counterapi.dev/v2/mob-extra-site-views/vile-tempest-site-views/up",
     )
       .then((res) => {
         if (!res.ok) throw new Error("API response not OK");
         return res.json();
       })
       .then((data) => {
-        const count = data.data?.up ?? data.count;
+        // Target up_count inside the nested data object correctly
+        const count = data.data?.up_count ?? data.up_count ?? data.count;
+
         if (typeof count === "number") {
           const totalViews = BASE_OFFSET + count;
           targets.forEach((el) => {
